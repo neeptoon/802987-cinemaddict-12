@@ -10,18 +10,15 @@ const footerStatistics = footer.querySelector(`.footer__statistics`);
 const filmsListExtraHeaders = [`<h2 class="films-list__title">Top rated</h2>`, `<h2 class="films-list__title">Most commented</h2>`];
 const filmsCardAmounts = [5, 2, 2];
 
-const createProfileHTML = () => {
-  return (
-    `<section class="header__profile profile">
+const createProfileHTML = () =>
+  `<section class="header__profile profile">
     <p class="profile__rating">Movie Buff</p>
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-  </section>`
-  );
-};
+  </section>`;
 
-const createMainNavigationHTML = () => {
-  return (
-    `<nav class="main-navigation">
+
+const createMainNavigationHTML = () =>
+  `<nav class="main-navigation">
     <div class="main-navigation__items">
       <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
       <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
@@ -29,58 +26,37 @@ const createMainNavigationHTML = () => {
       <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>`
-  );
-};
+  </nav>`;
 
-const createSortHTML = () => {
-  return (
-    `<ul class="sort">
+
+const createSortHTML = () =>
+  `<ul class="sort">
     <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
     <li><a href="#" class="sort__button">Sort by date</a></li>
     <li><a href="#" class="sort__button">Sort by rating</a></li>
-  </ul>`
-  );
-};
+  </ul>`;
 
-const createFilmsHTML = () => {
-  return (
-    `<section class="films"></section>`
-  );
-};
+const createFilmsHTML = () =>
+  `<section class="films"></section>`;
 
-const createFilmsListHTML = () => {
-  return (
-    `<section class="films-list">
+const createFilmsListHTML = () =>
+  `<section class="films-list">
       <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
-    </section >`
-  );
-};
+    </section >`;
 
-const createShowMoreButtonHTML = () => {
-  return (
-    `<button class="films-list__show-more">Show more</button>`
-  );
-};
+const createShowMoreButtonHTML = () =>
+  `<button class="films-list__show-more">Show more</button>`;
 
+const createFilmsListExtraHTML = () =>
+  `<section class="films-list--extra">
+    </section >`;
 
-const createFilmsListExtraHTML = () => {
-  return (
-    `<section class="films-list--extra">
-    </section >`
-  );
-};
+const createFilmsListContainerHTML = () =>
+  `<div class="films-list__container">
+    </div>`;
 
-const createFilmsListContainerHTML = () => {
-  return (
-    `<div class="films-list__container">
-    </div>`
-  );
-};
-
-const createFilmCardHTML = () => {
-  return (
-    `<article class="film-card">
+const createFilmCardHTML = () =>
+  `<article class="film-card">
           <h3 class="film-card__title">Santa Claus Conquers the Martians</h3>
           <p class="film-card__rating">2.3</p>
           <p class="film-card__info">
@@ -96,15 +72,11 @@ const createFilmCardHTML = () => {
             <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
             <button class="film-card__controls-item button film-card__controls-item--favorite film-card__controls-item--active">Mark as favorite</button>
           </form>
-        </article>`
-  );
-};
+        </article>`;
 
-const createfooterStatisticsHTML = () => {
-  return (
-    `<p>130 291 movies inside</p>`
-  );
-};
+
+const createfooterStatisticsHTML = () =>
+  `<p>130 291 movies inside</p>`;
 
 const renderComponent = (elem, where, html) => {
   elem.insertAdjacentHTML(where, html);
@@ -142,6 +114,5 @@ filmsListContainer.forEach((elem, index) => {
     renderComponent(elem, `afterbegin`, createFilmCardHTML());
   }
 });
-
 
 renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML());
