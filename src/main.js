@@ -4,6 +4,8 @@ const AMOUNT_FILMS_LIST_EXTRA = 2;
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
+const footer = document.querySelector(`.footer`);
+const footerStatistics = footer.querySelector(`.footer__statistics`);
 
 const filmsListExtraHeaders = [`<h2 class="films-list__title">Top rated</h2>`, `<h2 class="films-list__title">Most commented</h2>`];
 const filmsCardAmounts = [5, 2, 2];
@@ -98,6 +100,12 @@ const createFilmCardHTML = () => {
   );
 };
 
+const createfooterStatisticsHTML = () => {
+  return (
+    `<p>130 291 movies inside</p>`
+  );
+};
+
 const renderComponent = (elem, where, html) => {
   elem.insertAdjacentHTML(where, html);
 };
@@ -134,3 +142,6 @@ filmsListContainer.forEach((elem, index) => {
     renderComponent(elem, `afterbegin`, createFilmCardHTML());
   }
 });
+
+
+renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML());
