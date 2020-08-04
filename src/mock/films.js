@@ -43,6 +43,18 @@ const getRating = () => {
   return getRandomFraction(MIN_RATING, MAX_RATING);
 };
 
+const getDate = () => {
+  const MIN_YEAR = 1965;
+  const MAX_YEAR = 2020;
+
+  const currentDate = new Date();
+
+  currentDate.setFullYear(getRandomInteger(MIN_YEAR, MAX_YEAR));
+
+  return new Date(currentDate).getFullYear();
+};
+
+
 const generateFilm = () => {
   return {
     name: getName(),
@@ -50,9 +62,8 @@ const generateFilm = () => {
     description: `${getDescription()}.`,
     comment,
     rating: getRating(),
-    publishYear,
+    publishYear: getDate(),
     genre,
     duration,
   };
 };
-
