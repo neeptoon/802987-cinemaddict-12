@@ -54,6 +54,23 @@ const getDate = () => {
   return new Date(currentDate).getFullYear();
 };
 
+const getDuration = () => {
+  const MIN_HOUR_DURATION = 0;
+  const MAX_HOUR_DURATION = 2;
+  const MIN_MINUTES_DURATION = 0;
+  const MAX_MINUTES_DURATION = 59;
+
+  const hoursDuration = getRandomInteger(MIN_HOUR_DURATION, MAX_HOUR_DURATION);
+  const minutesDuration = getRandomInteger(MIN_MINUTES_DURATION, MAX_MINUTES_DURATION);
+  if (hoursDuration && minutesDuration) {
+    return `${hoursDuration}h ${minutesDuration}m`;
+  } else if (!hoursDuration && !minutesDuration) {
+    return `1h 35m`;
+  } else if (!hoursDuration && minutesDuration) {
+    return `${minutesDuration}m`;
+  }
+  return `${hoursDuration}`;
+};
 
 const generateFilm = () => {
   return {
@@ -64,6 +81,6 @@ const generateFilm = () => {
     rating: getRating(),
     publishYear: getDate(),
     genre,
-    duration,
+    duration: getDuration(),
   };
 };
