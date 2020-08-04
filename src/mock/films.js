@@ -6,6 +6,13 @@ const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
+const getRandomFraction = (a = 0, b = 1) => {
+  const lower = Math.min(a, b);
+  const upper = Math.max(a, b);
+  let fraction = lower + Math.random() * (upper - lower + 1);
+  return fraction.toFixed(1);
+};
+
 const getName = () => {
   const names = [`Волки`, `Овцы`, `Снег`, `Такси`, `Билет`, `Трамвай`, `Зеленый слоник`, `Вишневый загар`, `Быстрый самолет`, `Уголек`, `Паста из баклажанов`, `Красный пожар`, `Коммунистический рассвет`, `Стрелец`, `Коровий Бунт`, `Ночной поезд`];
 
@@ -23,13 +30,26 @@ const getDescription = () => {
     .join(`.`);
 };
 
+const getImage = () => {
+  const images = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
+
+  return images[getRandomInteger(0, images.length - 1)];
+};
+
+const getRating = () => {
+  const MIN_RATING = 0;
+  const MAX_RATING = 10;
+
+  return getRandomFraction(MIN_RATING, MAX_RATING);
+};
+
 const generateFilm = () => {
   return {
     name: getName(),
-    image,
+    image: `./images/posters/${getImage()}`,
     description: `${getDescription()}.`,
     comment,
-    rating,
+    rating: getRating(),
     publishYear,
     genre,
     duration,
