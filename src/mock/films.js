@@ -13,6 +13,24 @@ const getRandomFraction = (a = 0, b = 1) => {
   return fraction.toFixed(1);
 };
 
+const shuffleArray = (array) => {
+  let currentIndex = array.length;
+  let temporaryValue;
+  let randomIndex;
+
+  while (currentIndex !== 0) {
+
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
+
 const getName = () => {
   const names = [`Волки`, `Овцы`, `Снег`, `Такси`, `Билет`, `Трамвай`, `Зеленый слоник`, `Вишневый загар`, `Быстрый самолет`, `Уголек`, `Паста из баклажанов`, `Красный пожар`, `Коммунистический рассвет`, `Стрелец`, `Коровий Бунт`, `Ночной поезд`];
 
@@ -62,6 +80,7 @@ const getDuration = () => {
 
   const hoursDuration = getRandomInteger(MIN_HOUR_DURATION, MAX_HOUR_DURATION);
   const minutesDuration = getRandomInteger(MIN_MINUTES_DURATION, MAX_MINUTES_DURATION);
+
   if (hoursDuration && minutesDuration) {
     return `${hoursDuration}h ${minutesDuration}m`;
   } else if (!hoursDuration && !minutesDuration) {
@@ -72,15 +91,26 @@ const getDuration = () => {
   return `${hoursDuration}`;
 };
 
+const getGenre = () => {
+  const genres = [`fantasy`, `action`, `comedy`, `tragedy`, `porn`];
+  const randomGenres = shuffleArray(genres).slice(0, getRandomInteger(1, genres.length - 1));
+
+  if (randomGenres.length > 1) {
+    return `Genres ${randomGenres}`;
+  }
+  return `Genre ${randomGenres}`;
+};
+
 const generateFilm = () => {
   return {
     name: getName(),
     image: `./images/posters/${getImage()}`,
     description: `${getDescription()}.`,
-    comment,
+    // comment,
     rating: getRating(),
     publishYear: getDate(),
-    genre,
+    genre: getGenre(),
     duration: getDuration(),
   };
 };
+
