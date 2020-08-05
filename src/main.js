@@ -8,6 +8,7 @@ import { createFilmsListExtraHTML } from "./view/films-list-extra.js";
 import { createFilmsListContainerHTML } from "./view/films-list-container.js";
 import { createFilmCardHTML } from "./view/film-card.js";
 import { createfooterStatisticsHTML } from "./view/statistics.js";
+import { mockFilmsList } from "./mock/films.js";
 
 const AMOUNT_FILMS_LIST_EXTRA = 2;
 

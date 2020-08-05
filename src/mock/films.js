@@ -101,7 +101,7 @@ const getGenre = () => {
   return `Genre ${randomGenres}`;
 };
 
-const generateDescriptionFilm = () => {
+const generateFilm = () => {
   return {
     name: getName(),
     image: `./images/posters/${getImage()}`,
@@ -110,6 +110,7 @@ const generateDescriptionFilm = () => {
     publishYear: getPublishFilmDate(),
     genre: getGenre(),
     duration: getDuration(),
+    comment: generateComment(),
   };
 };
 
@@ -143,4 +144,7 @@ const generateComment = () => {
     emoji: `./images/emoji/${getEmoji()}`
   };
 };
+
+const FILMS_COUNT = 15;
+export const mockFilmsList = new Array(FILMS_COUNT).fill().map(generateFilm);
 
