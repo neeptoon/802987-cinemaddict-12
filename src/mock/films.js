@@ -61,7 +61,7 @@ const getRating = () => {
   return getRandomFraction(MIN_RATING, MAX_RATING);
 };
 
-const getDate = () => {
+const getPublishFilmDate = () => {
   const MIN_YEAR = 1965;
   const MAX_YEAR = 2020;
 
@@ -101,16 +101,46 @@ const getGenre = () => {
   return `Genre ${randomGenres}`;
 };
 
-const generateFilm = () => {
+const generateDescriptionFilm = () => {
   return {
     name: getName(),
     image: `./images/posters/${getImage()}`,
     description: `${getDescription()}.`,
-    // comment,
     rating: getRating(),
-    publishYear: getDate(),
+    publishYear: getPublishFilmDate(),
     genre: getGenre(),
     duration: getDuration(),
+  };
+};
+
+const getText = () => {
+  const texts = [`Боже, как скучно`, `Я плакал!`, `Ацтой!`, `Великолепная режиссура!!`, `Мне норм....`, `Телки ничо`, `Ничо не понял`, `Что это было!?`];
+  return texts[getRandomInteger(0, texts.length - 1)];
+};
+
+const getAuthor = () => {
+  const authors = [`Джонни Бой`, `Летающий панцырь`, `Свияга`, `Толстый Ленни`, `Пучок`, `Толька Ручник`, `Смеющийся глупец`, `Осёл с повозкой`, `Пенёк`, `Сын маминой подруги`, `Кремлебот`, `Яйцо рыбы`, `Молодец-огурец`, `Шнырь`];
+
+  return authors[getRandomInteger(0, authors.length - 1)];
+};
+
+const getEmoji = () => {
+  const emojies = [`angry.png`, `puke.png`, `sleeping.png`, `smile.png`];
+  return emojies[getRandomInteger(0, emojies.length - 1)];
+};
+
+const getCommentDate = () => {
+  const timeOfComments = [`вчера`, `сегодня`, `позавчера`, `3 года назад`, `15 минут назад`, `вчера вечером`, `сегодня утром`];
+
+  return timeOfComments[getRandomInteger(0, timeOfComments.length - 1)];
+};
+
+const generateComment = () => {
+  return {
+    text: getText(),
+    author: getAuthor(),
+    time: getCommentDate(),
+    emoji: `./images/emoji/${getEmoji()}`
   };
 };
 
