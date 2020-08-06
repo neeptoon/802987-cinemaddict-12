@@ -103,7 +103,7 @@ const getGenre = () => {
   const randomGenres = shuffleArray(genres).slice(0, getRandomInteger(1, genres.length - 1));
 
   if (randomGenres.length > 1) {
-    return `Genres ${randomGenres}`;
+    return `Genres ${randomGenres.join(`, `)}`;
   }
   return `Genre ${randomGenres}`;
 };
