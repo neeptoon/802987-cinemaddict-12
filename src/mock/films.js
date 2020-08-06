@@ -99,13 +99,10 @@ const getDuration = () => {
 };
 
 const getGenre = () => {
-  const genres = [`fantasy`, `action`, `comedy`, `tragedy`, `porn`];
+  const genres = [`Fantasy`, `Action`, `Comedy`, `Tragedy`, `Porn`];
   const randomGenres = shuffleArray(genres).slice(0, getRandomInteger(1, genres.length - 1));
 
-  if (randomGenres.length > 1) {
-    return `Genres ${randomGenres.join(`, `)}`;
-  }
-  return `Genre ${randomGenres}`;
+  return randomGenres.join(`, `);
 };
 
 const generateFilm = () => {
