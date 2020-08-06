@@ -55,52 +55,57 @@ const [...filmsListContainer] = films.querySelectorAll(`.films-list__container`)
 
 filmsListContainer.forEach((elem, index) => {
   for (let i = 0; i < filmsCardAmounts[index]; i++) {
-    renderComponent(elem, `afterbegin`, createFilmCardHTML(mockFilmsList[i]));
+    renderComponent(elem, `beforeend`, createFilmCardHTML(mockFilmsList[i]));
   }
 });
 
 renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML());
 
-const film = document.querySelector(`.film-card`);
-const title = film.querySelector(`.film-card__title`);
-const poster = film.querySelector(`.film-card__poster`);
-const comments = film.querySelector(`.film-card__comments`);
+const renderedFilms = document.querySelectorAll(`.film-card`);
 
-const documentKeyDownHandler = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closePopup();
-  }
-};
+Array.prototype.forEach.call(renderedFilms, (film, index) => {
+  const title = film.querySelector(`.film-card__title`);
+  const poster = film.querySelector(`.film-card__poster`);
+  const comments = film.querySelector(`.film-card__comments`);
 
-const openPopup = function (item) {
-  const popupTemplate = createFilmDetailsHTML(item[1]);
-  renderComponent(main, `beforeend`, popupTemplate);
-  document.addEventListener(`keydown`, documentKeyDownHandler);
-  document.addEventListener(`click`, documentClickHandler);
-};
+  const documentKeyDownHandler = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closePopup();
+    }
+  };
 
-const getPopup = () => document.querySelector(`.film-details`);
+  const openPopup = function (currentFilm) {
+    const popupTemplate = createFilmDetailsHTML(currentFilm);
+    renderComponent(main, `beforeend`, popupTemplate);
+    document.addEventListener(`keydown`, documentKeyDownHandler);
+    document.addEventListener(`click`, documentClickHandler);
+  };
 
-const documentClickHandler = function (evt) {
-  const closePopupButton = getPopup().querySelector(`.film-details__close-btn`);
-  if (evt.target === closePopupButton) {
-    closePopup();
-  }
-};
+  const getPopup = () => document.querySelector(`.film-details`);
 
-const closePopup = function () {
-  if (getPopup()) {
-    getPopup().remove();
-  }
-  document.removeEventListener(`keydown`, documentKeyDownHandler);
-  document.removeEventListener(`click`, documentClickHandler);
-};
+  const documentClickHandler = function (evt) {
+    const closePopupButton = getPopup().querySelector(`.film-details__close-btn`);
+    if (evt.target === closePopupButton) {
+      closePopup();
+    }
+  };
 
-const cardFilmClickHandler = (evt) => {
-  if (evt.target === title || evt.target === poster || evt.target === comments) {
-    closePopup();
-    openPopup(mockFilmsList);
-  }
-};
+  const closePopup = function () {
+    if (getPopup()) {
+      getPopup().remove();
+    }
+    document.removeEventListener(`keydown`, documentKeyDownHandler);
+    document.removeEventListener(`click`, documentClickHandler);
+  };
 
-film.addEventListener(`click`, cardFilmClickHandler);
+  const cardFilmClickHandler = (evt) => {
+    if (evt.target === title || evt.target === poster || evt.target === comments) {
+      closePopup();
+      openPopup(mockFilmsList[index]);
+    }
+  };
+
+  film.addEventListener(`click`, cardFilmClickHandler);
+});
+
+
