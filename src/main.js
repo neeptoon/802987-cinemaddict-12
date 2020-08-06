@@ -13,14 +13,15 @@ import { mockFilmsList } from "./mock/films.js";
 
 const AMOUNT_FILMS_LIST_EXTRA = 2;
 const ESC_KEYCODE = 27;
+const MAIN_FILM_CARDS = 5;
+const RATED_FILM_CARDS = 2;
+const COMMENT_FILM_CARDS = 2;
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
 const footerStatistics = footer.querySelector(`.footer__statistics`);
 const filmsListExtraHeaders = [`<h2 class="films-list__title">Top rated</h2>`, `<h2 class="films-list__title">Most commented</h2>`];
-const filmsCardAmounts = [5, 2, 2];
-
 
 const renderComponent = (elem, where, html) => {
   elem.insertAdjacentHTML(where, html);
@@ -51,13 +52,23 @@ filmsListExtra.forEach((elem, index) => {
   renderComponent(elem, `afterbegin`, filmsListExtraHeaders[index]);
 });
 
-const [...filmsListContainer] = films.querySelectorAll(`.films-list__container`);
+const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
 
-filmsListContainer.forEach((elem, index) => {
-  for (let i = 0; i < filmsCardAmounts[index]; i++) {
-    renderComponent(elem, `beforeend`, createFilmCardHTML(mockFilmsList[i]));
-  }
-});
+mockFilmsList
+  .filter((elem, index) => index < MAIN_FILM_CARDS)
+  .forEach((elem) => renderComponent(mainFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
+
+mockFilmsList
+  .slice()
+  .sort((a, b) => a.rating > b.rating ? -1 : 1)
+  .filter((elem, index) => index < RATED_FILM_CARDS)
+  .forEach((elem) => renderComponent(ratedFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
+
+mockFilmsList
+  .slice()
+  .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
+  .filter((elem, index) => index < COMMENT_FILM_CARDS)
+  .forEach((elem) => renderComponent(commentedFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
 
 renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML());
 

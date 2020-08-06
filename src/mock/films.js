@@ -1,42 +1,9 @@
+import { getRandomInteger, getRandomFraction, shuffleArray, uniteSeveralThingsIntoArray } from "../utils.js";
+
+
 const FILMS_COUNT = 15;
 const MIN_COMMENT = 0;
 const MAX_COMMENT = 5;
-
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
-};
-
-const getRandomFraction = (a = 0, b = 1) => {
-  const lower = Math.min(a, b);
-  const upper = Math.max(a, b);
-  let fraction = lower + Math.random() * (upper - lower + 1);
-  return fraction.toFixed(1);
-};
-
-const shuffleArray = (array) => {
-  let currentIndex = array.length;
-  let temporaryValue;
-  let randomIndex;
-
-  while (currentIndex !== 0) {
-
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
-
-const uniteSeveralThings = (thing, amountThing) => {
-  return new Array(amountThing).fill().map(thing);
-};
 
 const getName = () => {
   const names = [`Волки`, `Овцы`, `Снег`, `Такси`, `Билет`, `Трамвай`, `Зеленый слоник`, `Вишневый загар`, `Быстрый самолет`, `Уголек`, `Паста из баклажанов`, `Красный пожар`, `Коммунистический рассвет`, `Стрелец`, `Коровий Бунт`, `Ночной поезд`];
@@ -65,7 +32,7 @@ const getRating = () => {
   const MIN_RATING = 0;
   const MAX_RATING = 10;
 
-  return getRandomFraction(MIN_RATING, MAX_RATING);
+  return Number(getRandomFraction(MIN_RATING, MAX_RATING));
 };
 
 const getPublishFilmDate = () => {
@@ -114,7 +81,7 @@ const generateFilm = () => {
     publishYear: getPublishFilmDate(),
     genre: getGenre(),
     duration: getDuration(),
-    comments: uniteSeveralThings(generateComment, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
+    comments: uniteSeveralThingsIntoArray(generateComment, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
   };
 };
 
@@ -150,6 +117,4 @@ const generateComment = () => {
   };
 };
 
-export const mockFilmsList = uniteSeveralThings(generateFilm, FILMS_COUNT);
-
-
+export const mockFilmsList = uniteSeveralThingsIntoArray(generateFilm, FILMS_COUNT);
