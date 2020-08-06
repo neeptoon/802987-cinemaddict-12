@@ -10,9 +10,6 @@ import { createFilmCardHTML } from "./view/film-card.js";
 import { createfooterStatisticsHTML } from "./view/statistics.js";
 import { mockFilmsList } from "./mock/films.js";
 
-console.log(mockFilmsList);
-
-
 const AMOUNT_FILMS_LIST_EXTRA = 2;
 
 const header = document.querySelector(`.header`);
@@ -57,7 +54,7 @@ const [...filmsListContainer] = films.querySelectorAll(`.films-list__container`)
 
 filmsListContainer.forEach((elem, index) => {
   for (let i = 0; i < filmsCardAmounts[index]; i++) {
-    renderComponent(elem, `afterbegin`, createFilmCardHTML());
+    renderComponent(elem, `afterbegin`, createFilmCardHTML(mockFilmsList[i]));
   }
 });
 

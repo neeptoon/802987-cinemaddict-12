@@ -117,7 +117,7 @@ const generateFilm = () => {
     publishYear: getPublishFilmDate(),
     genre: getGenre(),
     duration: getDuration(),
-    comment: uniteSeveralThings(generateComment, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
+    comments: uniteSeveralThings(generateComment, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
   };
 };
 
