@@ -1,3 +1,6 @@
+const FILMS_COUNT = 15;
+const MIN_COMMENT = 0;
+const MAX_COMMENT = 5;
 
 const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -29,6 +32,10 @@ const shuffleArray = (array) => {
   }
 
   return array;
+};
+
+const uniteSeveralThings = (thing, amountThing) => {
+  return new Array(amountThing).fill().map(thing);
 };
 
 const getName = () => {
@@ -110,9 +117,10 @@ const generateFilm = () => {
     publishYear: getPublishFilmDate(),
     genre: getGenre(),
     duration: getDuration(),
-    comment: generateComment(),
+    comment: uniteSeveralThings(generateComment, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
   };
 };
+
 
 const getText = () => {
   const texts = [`Боже, как скучно`, `Я плакал!`, `Ацтой!`, `Великолепная режиссура!!`, `Мне норм....`, `Телки ничо`, `Ничо не понял`, `Что это было!?`];
@@ -145,6 +153,6 @@ const generateComment = () => {
   };
 };
 
-const FILMS_COUNT = 15;
-export const mockFilmsList = new Array(FILMS_COUNT).fill().map(generateFilm);
+export const mockFilmsList = uniteSeveralThings(generateFilm, FILMS_COUNT);
+
 

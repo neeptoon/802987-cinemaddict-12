@@ -10,6 +10,9 @@ import { createFilmCardHTML } from "./view/film-card.js";
 import { createfooterStatisticsHTML } from "./view/statistics.js";
 import { mockFilmsList } from "./mock/films.js";
 
+console.log(mockFilmsList);
+
+
 const AMOUNT_FILMS_LIST_EXTRA = 2;
 
 const header = document.querySelector(`.header`);
