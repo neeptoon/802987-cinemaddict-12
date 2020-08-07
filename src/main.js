@@ -74,6 +74,8 @@ renderCards(preparatedCards);
 
 renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML(mockFilmsList));
 
+
+// show popup
 const renderedFilms = document.querySelectorAll(`.film-card`);
 
 Array.prototype.forEach.call(renderedFilms, (film, index) => {
@@ -120,5 +122,8 @@ Array.prototype.forEach.call(renderedFilms, (film, index) => {
 
   film.addEventListener(`click`, cardFilmClickHandler);
 });
+
+
+// render comments
 
 
