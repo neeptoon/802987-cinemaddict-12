@@ -11,6 +11,8 @@ import { createfooterStatisticsHTML } from "./view/statistics.js";
 import { createFilmDetailsHTML } from "./view/film-details.js";
 import { createCommentHTML } from "./view/comment.js";
 import { createGenreHTML } from "./view/genre.js";
+import { createGenreFieldHTML } from "./view/genre-field.js";
+
 import { mockFilmsList } from "./mock/films.js";
 import { AMOUNT_FILMS_LIST_EXTRA, ESC_KEYCODE, MAIN_FILM_CARDS, RATED_FILM_CARDS, COMMENT_FILM_CARDS } from "./utils.js";
 
@@ -94,7 +96,10 @@ const openPopup = function (card) {
   renderComponent(main, `beforeend`, createFilmDetailsHTML(card));
   popup = main.querySelector(`.film-details`);
   card.comments.forEach((elem) => renderComponent(popup.querySelector(`.film-details__comments-list`), `beforeend`, createCommentHTML(elem)));
-  renderComponent(popup.querySelector(`.film-details__table`), `beforeend`, createGenreHTML(card));
+  renderComponent(popup.querySelector(`.film-details__table tbody`), `beforeend`, createGenreHTML(card));
+  const [...rowsForProperties] = popup.querySelectorAll(`.film-details__row`);
+  const rowForGenres = rowsForProperties[rowsForProperties.length - 1];
+  card.genre.genres.forEach((elem) => renderComponent(rowForGenres.querySelector(`.film-details__cell`), `beforeend`, createGenreFieldHTML(elem)));
   document.addEventListener(`keydown`, documentKeyDownHandler);
   document.addEventListener(`click`, documentClickHandler);
 };
