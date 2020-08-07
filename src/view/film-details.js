@@ -1,5 +1,5 @@
 export const createFilmDetailsHTML = (film) => {
-  const { name, image, description, rating, publishYear, genre, duration, comments } = film;
+  const { name, image, description, rating, publishYear, duration, comments } = film;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="form-details__top-container">

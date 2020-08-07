@@ -87,12 +87,12 @@ const generateFilm = () => {
   return {
     name: getName(),
     image: `./images/posters/${getImage()}`,
-    description: `${getDescription()}.`,
+    description: `${getDescription()}`,
     rating: getRating(),
     publishYear: getPublishFilmDate(),
-    genre: getGenre(),
     duration: getDuration(),
     comments: uniteSeveralThingsIntoArray(generateComment, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
+    genre: getGenre(),
   };
 };
 
