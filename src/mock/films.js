@@ -67,9 +67,20 @@ const getDuration = () => {
 
 const getGenre = () => {
   const genres = [`Fantasy`, `Action`, `Comedy`, `Tragedy`, `Porn`];
-  const randomGenres = shuffleArray(genres).slice(0, getRandomInteger(1, genres.length - 1));
+  const randomGenres = shuffleArray(genres)
+    .slice(0, getRandomInteger(1, genres.length - 1));
 
-  return randomGenres.join(`, `);
+  const detailedGenres = Object.create({}, {
+    title: {
+      get() {
+        return randomGenres.length > 1 ? `Genres` : `Genre`;
+      }
+    },
+    genres: {
+      value: randomGenres
+    }
+  });
+  return detailedGenres;
 };
 
 const generateFilm = () => {
@@ -118,3 +129,5 @@ const generateComment = () => {
 };
 
 export const mockFilmsList = uniteSeveralThingsIntoArray(generateFilm, FILMS_COUNT);
+
+console.log(mockFilmsList[0]);

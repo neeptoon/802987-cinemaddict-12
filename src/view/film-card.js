@@ -6,7 +6,7 @@ export const createFilmCardHTML = (film) => {
           <p class="film-card__info">
             <span class="film-card__year">${publishYear}</span>
             <span class="film-card__duration">${duration}</span>
-            <span class="film-card__genre">${genre}</span>
+            <span class="film-card__genre">${genre.genres.join(`, `)}</span>
           </p>
           <img src="${image}" alt="" class="film-card__poster">
           <p class="film-card__description">${description}</p>

@@ -10,6 +10,7 @@ import { createFilmCardHTML } from "./view/film-card.js";
 import { createfooterStatisticsHTML } from "./view/statistics.js";
 import { createFilmDetailsHTML } from "./view/film-details.js";
 import { createCommentHTML } from "./view/comment.js";
+import { createGenreHTML } from "./view/genre.js";
 import { mockFilmsList } from "./mock/films.js";
 import { AMOUNT_FILMS_LIST_EXTRA, ESC_KEYCODE, MAIN_FILM_CARDS, RATED_FILM_CARDS, COMMENT_FILM_CARDS } from "./utils.js";
 
@@ -93,7 +94,7 @@ const openPopup = function (card) {
   renderComponent(main, `beforeend`, createFilmDetailsHTML(card));
   popup = main.querySelector(`.film-details`);
   card.comments.forEach((elem) => renderComponent(popup.querySelector(`.film-details__comments-list`), `beforeend`, createCommentHTML(elem)));
-  card.genre.forEach((elem) => renderComponent(popup.querySelector(`.film-details__table`), `beforeend`, createCommentHTML(elem)));
+  renderComponent(popup.querySelector(`.film-details__table`), `beforeend`, createGenreHTML(card));
   document.addEventListener(`keydown`, documentKeyDownHandler);
   document.addEventListener(`click`, documentClickHandler);
 };
