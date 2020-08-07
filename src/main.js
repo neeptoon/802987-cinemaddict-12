@@ -9,6 +9,7 @@ import { createFilmsListContainerHTML } from "./view/films-list-container.js";
 import { createFilmCardHTML } from "./view/film-card.js";
 import { createfooterStatisticsHTML } from "./view/statistics.js";
 import { createFilmDetailsHTML } from "./view/film-details.js";
+import { createCommentHTML } from "./view/comment.js";
 import { mockFilmsList } from "./mock/films.js";
 import { AMOUNT_FILMS_LIST_EXTRA, ESC_KEYCODE, MAIN_FILM_CARDS, RATED_FILM_CARDS, COMMENT_FILM_CARDS } from "./utils.js";
 
@@ -71,59 +72,55 @@ const renderCards = (cards) => {
 
 renderCards(preparatedCards);
 
-
 renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML(mockFilmsList));
 
 
 // show popup
-const renderedFilms = document.querySelectorAll(`.film-card`);
+const renderedFilmCard = document.querySelector(`.film-card`);
+const title = renderedFilmCard.querySelector(`.film-card__title`);
+const poster = renderedFilmCard.querySelector(`.film-card__poster`);
+const comments = renderedFilmCard.querySelector(`.film-card__comments`);
+let popup = null;
 
-Array.prototype.forEach.call(renderedFilms, (film, index) => {
-  const title = film.querySelector(`.film-card__title`);
-  const poster = film.querySelector(`.film-card__poster`);
-  const comments = film.querySelector(`.film-card__comments`);
-
-  const documentKeyDownHandler = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closePopup();
-    }
-  };
-
-  const openPopup = function (currentFilm) {
-    const popupTemplate = createFilmDetailsHTML(currentFilm);
-    renderComponent(main, `beforeend`, popupTemplate);
-    document.addEventListener(`keydown`, documentKeyDownHandler);
-    document.addEventListener(`click`, documentClickHandler);
-  };
-
-  const getPopup = () => document.querySelector(`.film-details`);
-
-  const documentClickHandler = function (evt) {
-    const closePopupButton = getPopup().querySelector(`.film-details__close-btn`);
-    if (evt.target === closePopupButton) {
-      closePopup();
-    }
-  };
-
-  const closePopup = function () {
-    if (getPopup()) {
-      getPopup().remove();
-    }
-    document.removeEventListener(`keydown`, documentKeyDownHandler);
-    document.removeEventListener(`click`, documentClickHandler);
-  };
-
-  const cardFilmClickHandler = (evt) => {
-    if (evt.target === title || evt.target === poster || evt.target === comments) {
-      closePopup();
-      openPopup(mockFilmsList[index]);
-    }
-  };
-
-  film.addEventListener(`click`, cardFilmClickHandler);
-});
+const documentKeyDownHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
 
 
-// render comments
+const openPopup = function (card) {
+  renderComponent(main, `beforeend`, createFilmDetailsHTML(card));
+  popup = main.querySelector(`.film-details`);
+  card.comments.forEach((elem) => renderComponent(popup.querySelector(`.film-details__comments-list`), `beforeend`, createCommentHTML(elem)));
+  card.genre.forEach((elem) => renderComponent(popup.querySelector(`.film-details__table`), `beforeend`, createCommentHTML(elem)));
+  document.addEventListener(`keydown`, documentKeyDownHandler);
+  document.addEventListener(`click`, documentClickHandler);
+};
 
+
+const documentClickHandler = function (evt) {
+  const closePopupButton = popup.querySelector(`.film-details__close-btn`);
+  if (evt.target === closePopupButton) {
+    closePopup();
+  }
+};
+
+const closePopup = function () {
+  if (popup) {
+    popup.remove();
+  }
+  document.removeEventListener(`keydown`, documentKeyDownHandler);
+  document.removeEventListener(`click`, documentClickHandler);
+};
+
+const cardFilmClickHandler = (evt) => {
+  if (evt.target === title || evt.target === poster || evt.target === comments) {
+    closePopup();
+    openPopup(preparatedCards[0]);
+  }
+};
+
+renderedFilmCard.addEventListener(`click`, cardFilmClickHandler);
+//
 
