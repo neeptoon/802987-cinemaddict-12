@@ -1,4 +1,8 @@
-
+export const AMOUNT_FILMS_LIST_EXTRA = 2;
+export const ESC_KEYCODE = 27;
+export const MAIN_FILM_CARDS = 5;
+export const RATED_FILM_CARDS = 2;
+export const COMMENT_FILM_CARDS = 2;
 
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
