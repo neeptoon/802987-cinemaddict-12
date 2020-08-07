@@ -1,6 +1,7 @@
 export const createFilmCardHTML = (film) => {
-  let { name, image, description, rating, publishYear, genre, duration, comments } = film;
+  const MAX_STRING_LENGTH = 140;
 
+  const { name, image, description, rating, publishYear, genre, duration, comments } = film;
   const truncation = (str, maxlength) => {
     return (str.length > maxlength) ? str.slice(0, maxlength - 1) + `…` : str;
   };
@@ -14,7 +15,7 @@ export const createFilmCardHTML = (film) => {
             <span class="film-card__genre">${genre.genres.join(`, `)}</span>
           </p>
           <img src="${image}" alt="" class="film-card__poster">
-          <p class="film-card__description">${truncation(description, 140)}</p>
+          <p class="film-card__description">${truncation(description, MAX_STRING_LENGTH)}</p>
           <a class="film-card__comments">${comments.length}</a>
           <form class="film-card__controls">
             <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>

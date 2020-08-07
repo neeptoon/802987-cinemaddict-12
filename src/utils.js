@@ -38,3 +38,5 @@ export const shuffleArray = (array) => {
 export const uniteSeveralThingsIntoArray = (thing, amountThing) => {
   return new Array(amountThing).fill().map(thing);
 };
+
+export const getSomeValue = (arr) => arr[getRandomInteger(0, arr.length - 1)];
