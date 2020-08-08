@@ -14,15 +14,14 @@ import { createGenreHTML } from "./view/genre.js";
 import { createGenreFieldHTML } from "./view/genre-field.js";
 
 import { mockFilmsList } from "./mock/films.js";
-import { AMOUNT_FILMS_LIST_EXTRA, ESC_KEYCODE, MAIN_FILM_CARDS, RATED_FILM_CARDS, COMMENT_FILM_CARDS } from "./utils.js";
-
+import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS } from "./utils.js";
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
 const footerStatistics = footer.querySelector(`.footer__statistics`);
 const filmsListExtraHeaders = [`<h2 class="films-list__title">Top rated</h2>`, `<h2 class="films-list__title">Most commented</h2>`];
-const preparatedCards = mockFilmsList.slice();
+const preparatedMainFilmCardsForRender = mockFilmsList.slice();
 
 const renderComponent = (elem, where, html) => {
   elem.insertAdjacentHTML(where, html);
@@ -53,29 +52,49 @@ filmsListExtra.forEach((elem, index) => {
   renderComponent(elem, `afterbegin`, filmsListExtraHeaders[index]);
 });
 
+// render Cards
 const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
 
-const renderCards = (cards) => {
-  cards
-    .filter((elem, index) => index < MAIN_FILM_CARDS)
+
+const renderMainFilmCards = () => {
+  preparatedMainFilmCardsForRender
+    .filter((elem, index) => index < AMOUNT_MAIN_FILM_CARDS)
     .forEach((elem) => renderComponent(mainFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
+  preparatedMainFilmCardsForRender.splice(0, AMOUNT_MAIN_FILM_CARDS);
+  renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML(preparatedMainFilmCardsForRender));
+};
 
-  cards
-    .slice()
-    .sort((a, b) => a.rating > b.rating ? -1 : 1)
-    .filter((elem, index) => index < RATED_FILM_CARDS)
-    .forEach((elem) => renderComponent(ratedFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
-
+const renderFollowingFilmCards = (cards) => {
   cards
     .slice()
     .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
-    .filter((elem, index) => index < COMMENT_FILM_CARDS)
+    .filter((elem, index) => index < AMOUNT_COMMENT_FILM_CARDS)
     .forEach((elem) => renderComponent(commentedFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
+  cards
+    .slice()
+    .sort((a, b) => a.rating > b.rating ? -1 : 1)
+    .filter((elem, index) => index < AMOUNT_RATED_FILM_CARDS)
+    .forEach((elem) => renderComponent(ratedFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
 };
 
-renderCards(preparatedCards);
 
-renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML(mockFilmsList));
+renderMainFilmCards(mockFilmsList);
+renderFollowingFilmCards(mockFilmsList);
+
+const showMoreFilmCardsButton = filmsList.querySelector(`.films-list__show-more`);
+
+const buttonClickHandler = () => {
+  footerStatistics.firstElementChild.remove();
+  if (preparatedMainFilmCardsForRender.length > 0) {
+    renderMainFilmCards();
+  } else {
+    showMoreFilmCardsButton.classList.add(`visually-hidden`);
+  }
+};
+
+showMoreFilmCardsButton.addEventListener(`click`, buttonClickHandler);
+
+//
 
 
 // show popup
@@ -86,6 +105,7 @@ const comments = renderedFilmCard.querySelector(`.film-card__comments`);
 let popup = null;
 
 const documentKeyDownHandler = function (evt) {
+  const ESC_KEYCODE = 27;
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
@@ -103,7 +123,6 @@ const openPopup = function (card) {
   document.addEventListener(`keydown`, documentKeyDownHandler);
   document.addEventListener(`click`, documentClickHandler);
 };
-
 
 const documentClickHandler = function (evt) {
   const closePopupButton = popup.querySelector(`.film-details__close-btn`);
@@ -123,7 +142,7 @@ const closePopup = function () {
 const cardFilmClickHandler = (evt) => {
   if (evt.target === title || evt.target === poster || evt.target === comments) {
     closePopup();
-    openPopup(preparatedCards[0]);
+    openPopup(preparatedMainFilmCardsForRender[0]);
   }
 };
 
