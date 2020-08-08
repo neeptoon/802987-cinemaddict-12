@@ -15,7 +15,7 @@ export const getRandomFraction = (a = 0, b = 1) => {
   const lower = Math.min(a, b);
   const upper = Math.max(a, b);
   let fraction = lower + Math.random() * (upper - lower + 1);
-  return fraction.toFixed(1);
+  return fraction > 10 ? 10 : fraction.toFixed(1);
 };
 
 export const shuffleArray = (array) => {

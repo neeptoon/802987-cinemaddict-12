@@ -1,5 +1,5 @@
 export const createFilmDetailsHTML = (film) => {
-  const { name, image, description, rating, publishYear, duration, comments } = film;
+  const { name, image, description, rating, publishYear, duration, comments, genre, director, writers, actors, country } = film;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="form-details__top-container">
@@ -10,7 +10,7 @@ export const createFilmDetailsHTML = (film) => {
         <div class="film-details__poster">
           <img class="film-details__poster-img" src="${image}" alt="">
 
-          <p class="film-details__age">18+</p>
+          <p class="film-details__age">${genre.age}</p>
         </div>
 
         <div class="film-details__info">
@@ -28,15 +28,15 @@ export const createFilmDetailsHTML = (film) => {
           <table class="film-details__table">
             <tr class="film-details__row">
               <td class="film-details__term">Director</td>
-              <td class="film-details__cell">Anthony Mann</td>
+              <td class="film-details__cell">${director}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Writers</td>
-              <td class="film-details__cell">Anne Wigton, Heinz Herald, Richard Weil</td>
+              <td class="film-details__cell">${writers.join(`, `)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Actors</td>
-              <td class="film-details__cell">Erich von Stroheim, Mary Beth Hughes, Dan Duryea</td>
+              <td class="film-details__cell">${actors.join(`, `)}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">${publishYear}</td>
@@ -47,7 +47,7 @@ export const createFilmDetailsHTML = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Country</td>
-              <td class="film-details__cell">USA</td>
+              <td class="film-details__cell">${country}</td>
             </tr>
           </table>
 

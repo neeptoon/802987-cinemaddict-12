@@ -11,6 +11,10 @@ const comments = [`Боже, как скучно`, `Я плакал!`, `Ацто
 const authors = [`Джонни Бой`, `Летающий панцырь`, `Свияга`, `Толстый Ленни`, `Пучок`, `Толька Ручник`, `Смеющийся глупец`, `Осёл с повозкой`, `Пенёк`, `Сын маминой подруги`, `Кремлебот`, `Яйцо рыбы`, `Молодец-огурец`, `Шнырь`];
 const timeOfComments = [`вчера`, `сегодня`, `позавчера`, `3 года назад`, `15 минут назад`, `вчера вечером`, `сегодня утром`];
 const emojies = [`angry.png`, `puke.png`, `sleeping.png`, `smile.png`];
+const directors = [`John Polson`, `Kevin Worth`, `Andrew Stomatch`, `Ville Haapassalo`, `Martin Luter`, `Kventin Tarantino`, `Guy Richie`];
+const writers = [[`Tom Farr`, `Tom Spot`, `Jassie Row`, `Nick Pens`], [`Uma Red`, `Vins Blick`, `Kate Storm`], [`Joe Russel`, `Anton Pack`, `Jack Smith`]];
+const actors = [[`Dani de la Orden`, `Ramón Salazar`, `Jorge Torregrossa`, `Sílvia Quer`], [`Itzan Escamilla`, `Guzmán Nunier`, `Ander Munoz`], [`Omar Shanaa`, `Polo Benavent`, `Nadia Shanaa`]];
+const countries = [`USA`, `France`, `Italy`, `Russia`, `Mongolya`, `Iraque`, `Palestina`, `England`, `Poland`, `Spain`];
 
 const getDescription = () => {
   const MIN_AMOUNT_SENTENCE = 1;
@@ -75,6 +79,12 @@ const getGenre = () => {
     },
     genres: {
       value: randomGenres
+    },
+
+    age: {
+      get() {
+        return randomGenres.includes(`Porn`, 0) ? `18+` : ``;
+      }
     }
   });
   return detailedGenres;
@@ -90,6 +100,10 @@ const generateFilm = () => {
     duration: getDuration(),
     comments: uniteSeveralThingsIntoArray(generateComments, getRandomInteger(MIN_COMMENT, MAX_COMMENT)),
     genre: getGenre(),
+    director: getSomeValue(directors),
+    writers: getSomeValue(writers),
+    actors: getSomeValue(actors),
+    country: getSomeValue(countries),
   };
 };
 
