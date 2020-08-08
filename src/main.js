@@ -85,15 +85,13 @@ const showMoreFilmCardsButton = filmsList.querySelector(`.films-list__show-more`
 
 const buttonClickHandler = () => {
   footerStatistics.firstElementChild.remove();
-  if (preparatedMainFilmCardsForRender.length > 0) {
-    renderMainFilmCards();
-  } else {
+  renderMainFilmCards();
+  if (preparatedMainFilmCardsForRender.length < AMOUNT_MAIN_FILM_CARDS) {
     showMoreFilmCardsButton.classList.add(`visually-hidden`);
   }
 };
 
 showMoreFilmCardsButton.addEventListener(`click`, buttonClickHandler);
-
 //
 
 
