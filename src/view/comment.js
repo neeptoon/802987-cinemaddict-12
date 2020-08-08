@@ -1,5 +1,5 @@
 export const createCommentHTML = (elem) => {
-  const { text, author, time, emoji } = elem;
+  const {text, author, time, emoji} = elem;
   return `<li class="film-details__comment">
   <span class="film-details__comment-emoji"><img src="${emoji}" width="55" height="55" alt="emoji-sleeping"></span>
     <div>
