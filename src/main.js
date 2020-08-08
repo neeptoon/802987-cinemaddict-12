@@ -12,7 +12,6 @@ import { createFilmDetailsHTML } from "./view/film-details.js";
 import { createCommentHTML } from "./view/comment.js";
 import { createGenreHTML } from "./view/genre.js";
 import { createGenreFieldHTML } from "./view/genre-field.js";
-
 import { mockFilmsList } from "./mock/films.js";
 import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS } from "./utils.js";
 
@@ -108,7 +107,6 @@ const documentKeyDownHandler = function (evt) {
     closePopup();
   }
 };
-
 
 const openPopup = function (card) {
   renderComponent(main, `beforeend`, createFilmDetailsHTML(card));
