@@ -103,8 +103,12 @@ const generateFilm = () => {
     writers: getSomeValue(writers),
     actors: getSomeValue(actors),
     country: getSomeValue(countries),
+    isWatchlist: Boolean(getRandomInteger(0, 1)),
+    isHistory: Boolean(getRandomInteger(0, 1)),
+    isFavorites: Boolean(getRandomInteger(0, 1)),
   };
 };
+
 
 const generateComments = () => {
   return {

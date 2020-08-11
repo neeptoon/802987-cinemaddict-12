@@ -12,6 +12,7 @@ import {createFilmDetailsHTML} from "./view/film-details.js";
 import {createCommentHTML} from "./view/comment.js";
 import {createGenreHTML} from "./view/genre.js";
 import {createGenreFieldHTML} from "./view/genre-field.js";
+import {generateFilter} from "./view/filter.js";
 import {mockFilmsList} from "./mock/films.js";
 import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS} from "./utils.js";
 
@@ -21,13 +22,14 @@ const footer = document.querySelector(`.footer`);
 const footerStatistics = footer.querySelector(`.footer__statistics`);
 const filmsListExtraHeaders = [`<h2 class="films-list__title">Top rated</h2>`, `<h2 class="films-list__title">Most commented</h2>`];
 const preparatedMainFilmCardsForRender = mockFilmsList.slice();
+const filters = generateFilter(preparatedMainFilmCardsForRender);
 
 const renderComponent = (elem, where, html) => {
   elem.insertAdjacentHTML(where, html);
 };
 
 renderComponent(header, `beforeend`, createProfileHTML());
-renderComponent(main, `afterbegin`, createMainNavigationHTML());
+renderComponent(main, `afterbegin`, createMainNavigationHTML(filters));
 renderComponent(main, `beforeend`, createSortHTML());
 renderComponent(main, `beforeend`, createFilmsHTML());
 
@@ -144,4 +146,3 @@ const cardFilmClickHandler = (evt) => {
 
 renderedFilmCard.addEventListener(`click`, cardFilmClickHandler);
 //
-
