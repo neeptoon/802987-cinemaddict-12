@@ -7,7 +7,7 @@ import {createShowMoreButtonHTML} from "./view/button.js";
 import {createFilmsListExtraHTML} from "./view/films-list-extra.js";
 import {createFilmsListContainerHTML} from "./view/films-list-container.js";
 import {createFilmCardHTML} from "./view/film-card.js";
-import {createfooterStatisticsHTML} from "./view/statistics.js";
+import {createFooterStatisticsHTML} from "./view/foooter-statistics.js";
 import {createFilmDetailsHTML} from "./view/film-details.js";
 import {createCommentHTML} from "./view/comment.js";
 import {createGenreHTML} from "./view/genre.js";
@@ -60,7 +60,7 @@ const renderMainFilmCards = () => {
     .filter((elem, index) => index < AMOUNT_MAIN_FILM_CARDS)
     .forEach((elem) => renderComponent(mainFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
   preparatedMainFilmCardsForRender.splice(0, AMOUNT_MAIN_FILM_CARDS);
-  renderComponent(footerStatistics, `afterbegin`, createfooterStatisticsHTML(preparatedMainFilmCardsForRender));
+  renderComponent(footerStatistics, `afterbegin`, createFooterStatisticsHTML(preparatedMainFilmCardsForRender));
 };
 
 const renderFollowingFilmCards = (cards) => {
