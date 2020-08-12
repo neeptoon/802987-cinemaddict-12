@@ -1,20 +1,20 @@
-import {createProfileHTML} from "./view/profile.js";
-import {createMainNavigationHTML} from "./view/main-navigation.js";
-import {createSortHTML} from "./view/sort.js";
-import {createFilmsHTML} from "./view/films.js";
-import {createFilmsListHTML} from "./view/films-list.js";
-import {createShowMoreButtonHTML} from "./view/button.js";
-import {createFilmsListExtraHTML} from "./view/films-list-extra.js";
-import {createFilmsListContainerHTML} from "./view/films-list-container.js";
-import {createFilmCardHTML} from "./view/film-card.js";
-import {createFooterStatisticsHTML} from "./view/foooter-statistics.js";
-import {createFilmDetailsHTML} from "./view/film-details.js";
-import {createCommentHTML} from "./view/comment.js";
-import {createGenreHTML} from "./view/genre.js";
-import {createGenreFieldHTML} from "./view/genre-field.js";
-import {generateFilter} from "./view/filter.js";
-import {mockFilmsList} from "./mock/films.js";
-import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS} from "./utils.js";
+import { createProfileHTML } from "./view/profile.js";
+import { createMainNavigationHTML } from "./view/main-navigation.js";
+import { createSortHTML } from "./view/sort.js";
+import { createFilmsHTML } from "./view/films.js";
+import { createFilmsListHTML } from "./view/films-list.js";
+import { createShowMoreButtonHTML } from "./view/button.js";
+import { createFilmsListExtraHTML } from "./view/films-list-extra.js";
+import { createFilmsListContainerHTML } from "./view/films-list-container.js";
+import { createFilmCardHTML } from "./view/film-card.js";
+import { createFooterStatisticsHTML } from "./view/foooter-statistics.js";
+import { createFilmDetailsHTML } from "./view/film-details.js";
+import { createCommentHTML } from "./view/comment.js";
+import { createGenreHTML } from "./view/genre.js";
+import { createGenreFieldHTML } from "./view/genre-field.js";
+import { generateFilter } from "./view/filter.js";
+import { mockFilmsList } from "./mock/films.js";
+import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS, FILMS_COUNT } from "./constants.js";
 
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
@@ -40,10 +40,27 @@ renderComponent(films, `afterbegin`, createFilmsListHTML());
 const filmsList = films.querySelector(`.films-list`);
 
 renderComponent(filmsList, `beforeend`, createFilmsListContainerHTML());
-renderComponent(filmsList, `beforeend`, createShowMoreButtonHTML());
+
+if (AMOUNT_MAIN_FILM_CARDS < FILMS_COUNT) {
+  renderComponent(filmsList, `beforeend`, createShowMoreButtonHTML());
+
+  const showMoreFilmCardsButton = filmsList.querySelector(`.films-list__show-more`);
+
+  const buttonClickHandler = () => {
+    footerStatistics.firstElementChild.remove();
+    renderMainFilmCards();
+    if (!preparatedMainFilmCardsForRender.length) {
+      showMoreFilmCardsButton.remove();
+    }
+  };
+
+  showMoreFilmCardsButton.addEventListener(`click`, buttonClickHandler);
+}
+
 
 for (let i = 0; i < AMOUNT_FILMS_LIST_EXTRA; i++) {
   renderComponent(films, `beforeend`, createFilmsListExtraHTML());
+
 }
 
 const [...filmsListExtra] = films.querySelectorAll(`.films-list--extra`);
@@ -81,18 +98,6 @@ const renderFollowingFilmCards = (cards) => {
 
 renderMainFilmCards(mockFilmsList);
 renderFollowingFilmCards(mockFilmsList);
-
-const showMoreFilmCardsButton = filmsList.querySelector(`.films-list__show-more`);
-
-const buttonClickHandler = () => {
-  footerStatistics.firstElementChild.remove();
-  renderMainFilmCards();
-  if (preparatedMainFilmCardsForRender.length < AMOUNT_MAIN_FILM_CARDS) {
-    showMoreFilmCardsButton.classList.add(`visually-hidden`);
-  }
-};
-
-showMoreFilmCardsButton.addEventListener(`click`, buttonClickHandler);
 //
 
 
