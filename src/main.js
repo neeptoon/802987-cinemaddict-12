@@ -41,6 +41,7 @@ const filmsList = films.querySelector(`.films-list`);
 
 renderComponent(filmsList, `beforeend`, createFilmsListContainerHTML());
 
+// render showMoreFilmsButton
 if (AMOUNT_MAIN_FILM_CARDS < FILMS_COUNT) {
   renderComponent(filmsList, `beforeend`, createShowMoreButtonHTML());
 
@@ -56,7 +57,7 @@ if (AMOUNT_MAIN_FILM_CARDS < FILMS_COUNT) {
 
   showMoreFilmCardsButton.addEventListener(`click`, buttonClickHandler);
 }
-
+//
 
 for (let i = 0; i < AMOUNT_FILMS_LIST_EXTRA; i++) {
   renderComponent(films, `beforeend`, createFilmsListExtraHTML());
@@ -72,7 +73,6 @@ filmsListExtra.forEach((elem, index) => {
 
 // render Cards
 const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
-
 
 const renderMainFilmCards = () => {
   preparatedMainFilmCardsForRender
@@ -95,7 +95,6 @@ const renderFollowingFilmCards = (cards) => {
     .forEach((elem) => renderComponent(ratedFilmsListContainer, `beforeend`, createFilmCardHTML(elem)));
 };
 
-
 renderMainFilmCards(mockFilmsList);
 renderFollowingFilmCards(mockFilmsList);
 //
@@ -108,6 +107,15 @@ const poster = renderedFilmCard.querySelector(`.film-card__poster`);
 const comments = renderedFilmCard.querySelector(`.film-card__comments`);
 let popup = null;
 
+const fillPopupWithData = (card) => {
+  popup = main.querySelector(`.film-details`);
+  card.comments.forEach((elem) => renderComponent(popup.querySelector(`.film-details__comments-list`), `beforeend`, createCommentHTML(elem)));
+  renderComponent(popup.querySelector(`.film-details__table tbody`), `beforeend`, createGenreHTML(card));
+  const [...rowsForProperties] = popup.querySelectorAll(`.film-details__row`);
+  const rowForGenres = rowsForProperties[rowsForProperties.length - 1];
+  card.genre.genres.forEach((elem) => renderComponent(rowForGenres.querySelector(`.film-details__cell`), `beforeend`, createGenreFieldHTML(elem)));
+};
+
 const documentKeyDownHandler = function (evt) {
   const ESC_KEYCODE = 27;
   if (evt.keyCode === ESC_KEYCODE) {
@@ -117,12 +125,7 @@ const documentKeyDownHandler = function (evt) {
 
 const openPopup = function (card) {
   renderComponent(main, `beforeend`, createFilmDetailsHTML(card));
-  popup = main.querySelector(`.film-details`);
-  card.comments.forEach((elem) => renderComponent(popup.querySelector(`.film-details__comments-list`), `beforeend`, createCommentHTML(elem)));
-  renderComponent(popup.querySelector(`.film-details__table tbody`), `beforeend`, createGenreHTML(card));
-  const [...rowsForProperties] = popup.querySelectorAll(`.film-details__row`);
-  const rowForGenres = rowsForProperties[rowsForProperties.length - 1];
-  card.genre.genres.forEach((elem) => renderComponent(rowForGenres.querySelector(`.film-details__cell`), `beforeend`, createGenreFieldHTML(elem)));
+  fillPopupWithData(card);
   document.addEventListener(`keydown`, documentKeyDownHandler);
   document.addEventListener(`click`, documentClickHandler);
 };
@@ -145,7 +148,7 @@ const closePopup = function () {
 const cardFilmClickHandler = (evt) => {
   if (evt.target === title || evt.target === poster || evt.target === comments) {
     closePopup();
-    openPopup(preparatedMainFilmCardsForRender[0]);
+    openPopup(mockFilmsList[0]);
   }
 };
 
