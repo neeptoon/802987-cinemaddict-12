@@ -1,4 +1,6 @@
-export const createFilmDetailsHTML = (film) => {
+import {createElement} from "../utils.js";
+
+const createFilmDetailsHTML = (film) => {
   const {name, image, description, rating, publishYear, duration, comments, genre, director, writers, actors, country} = film;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -109,3 +111,27 @@ export const createFilmDetailsHTML = (film) => {
   </form>
 </section>`;
 };
+
+
+export default class FilmDetails {
+  constructor(film) {
+    this._element = null;
+    this.film = film;
+  }
+
+  getTemplate(film) {
+    return createFilmDetailsHTML(film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(this.film));
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = 0;
+  }
+}

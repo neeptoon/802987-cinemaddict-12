@@ -1,4 +1,6 @@
-export const createMainNavigationHTML = (filter) => {
+import {createElement} from "../utils.js";
+
+const createMainNavigationHTML = (filter) => {
   const [, watchlist, history, favorites] = filter;
   const upperCaseString = (word) => word[0].toUpperCase() + word.slice(1);
   return `<nav class="main-navigation">
@@ -10,6 +12,29 @@ export const createMainNavigationHTML = (filter) => {
     </div>
     <a href="#stats" class="main-navigation__additional">Stats</a>
   </nav>`;
-
 };
+
+export default class MainNavigation {
+  constructor(filter) {
+    this._element = null;
+    this.filter = filter;
+  }
+
+  getTemplate(filter) {
+    return createMainNavigationHTML(filter);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(this.filter));
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = 0;
+  }
+}
+
 
