@@ -10,7 +10,6 @@ import FilmCard from "./view/film-card.js";
 import FooterStatistics from "./view/foooter-statistics.js";
 import FilmDetails from "./view/film-details.js";
 import Comment from "./view/comment.js";
-import Genre from "./view/genre.js";
 import GenreField from "./view/genre-field.js";
 import {generateFilter} from "./view/filter.js";
 import {mockFilmsList} from "./mock/films.js";
@@ -104,7 +103,7 @@ let popup = null;
 const fillPopupWithData = (card) => {
   popup = main.querySelector(`.film-details`);
   card.comments.forEach((elem) => renderElement(popup.querySelector(`.film-details__comments-list`), new Comment(elem).getElement(), RenderPosition.BEFOREEND));
-  renderElement(popup.querySelector(`.film-details__table tbody`), new Genre(card).getElement(), RenderPosition.BEFOREEND);
+  // renderElement(popup.querySelector(`.film-details__table tbody`), new Genre(card).getElement(), RenderPosition.BEFOREEND);
   const [...rowsForProperties] = popup.querySelectorAll(`.film-details__row`);
   const rowForGenres = rowsForProperties[rowsForProperties.length - 1];
   card.genre.genres.forEach((elem) => renderElement(rowForGenres.querySelector(`.film-details__cell`), new GenreField(elem).getElement(), RenderPosition.BEFOREEND));
