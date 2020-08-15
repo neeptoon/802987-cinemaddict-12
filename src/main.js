@@ -12,7 +12,7 @@ import FilmDetails from "./view/film-details.js";
 import Comment from "./view/comment.js";
 import GenreField from "./view/genre-field.js";
 import { generateFilter } from "./view/filter.js";
-import { mockFilmsList } from "./mock/films.js";
+import { mockFilmsList } from "./mock/mockFilms.js";
 import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS, FILMS_COUNT } from "./constants.js";
 import { render, RenderPosition } from "./utils.js";
 
