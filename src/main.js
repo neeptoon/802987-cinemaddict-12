@@ -88,7 +88,7 @@ const renderFollowingFilmCards = (cards) => {
     .forEach((elem) => render(ratedFilmsListContainer, new FilmCard(elem).getElement(), RenderPosition.BEFOREEND));
 };
 
-renderMainFilmCards(mockFilmsList);
+renderMainFilmCards();
 renderFollowingFilmCards(mockFilmsList);
 //
 
