@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import { createElement } from "../utils.js";
 
 const createFilmsListContainerHTML = () =>
   `<div class="films-list__container">

@@ -1,7 +1,7 @@
-import {createElement} from "../utils.js";
+import { createElement } from "../utils.js";
 
 const createFilmDetailsHTML = (film) => {
-  const {name, image, description, rating, publishYear, duration, comments, genre, director, writers, actors, country} = film;
+  const { name, image, description, rating, publishYear, duration, comments, genre, director, writers, actors, country } = film;
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="form-details__top-container">

@@ -16,6 +16,7 @@ import { mockFilmsList } from "./mock/mockFilms.js";
 import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_MAIN_FILM_CARDS, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS, FILMS_COUNT } from "./constants.js";
 import { render, RenderPosition } from "./utils.js";
 
+
 const header = document.querySelector(`.header`);
 const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
@@ -67,10 +68,21 @@ filmsListExtra.forEach((elem) => {
 // render Cards
 const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
 
+export const cardFilmClickHandler = (data, index) => (evt) => {
+  if (evt.target === title[index] || evt.target === poster[index] || evt.target === comments[index]) {
+    closePopup();
+    openPopup(data);
+  }
+};
+
 const renderMainFilmCards = () => {
   preparatedMainFilmCardsForRender
     .filter((elem, index) => index < AMOUNT_MAIN_FILM_CARDS)
-    .forEach((elem) => render(mainFilmsListContainer, new FilmCard(elem).getElement(), RenderPosition.BEFOREEND));
+    .forEach((elem, index) => {
+      let filmCard = new FilmCard(elem);
+      render(mainFilmsListContainer, filmCard.getElement(), RenderPosition.BEFOREEND);
+      filmCard.addHandler(index);
+    });
   preparatedMainFilmCardsForRender.splice(0, AMOUNT_MAIN_FILM_CARDS);
   render(footerStatistics, new FooterStatistics(preparatedMainFilmCardsForRender).getElement(), RenderPosition.BEFOREEND);
 };
@@ -92,12 +104,11 @@ renderMainFilmCards();
 renderFollowingFilmCards(mockFilmsList);
 //
 
-
 // show popup
-const renderedFilmCard = document.querySelector(`.film-card`);
-const title = renderedFilmCard.querySelector(`.film-card__title`);
-const poster = renderedFilmCard.querySelector(`.film-card__poster`);
-const comments = renderedFilmCard.querySelector(`.film-card__comments`);
+const [...renderedFilmCard] = document.querySelectorAll(`.film-card`);
+const [...title] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__title`));
+const [...poster] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__poster`));
+const [...comments] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__comments`));
 let popup = null;
 
 const fillPopupWithData = (card) => {
@@ -137,12 +148,6 @@ const closePopup = function () {
   document.removeEventListener(`click`, documentClickHandler);
 };
 
-const cardFilmClickHandler = (evt) => {
-  if (evt.target === title || evt.target === poster || evt.target === comments) {
-    closePopup();
-    openPopup(mockFilmsList[0]);
-  }
-};
-
-renderedFilmCard.addEventListener(`click`, cardFilmClickHandler);
 //
+
+

@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import { createElement } from "../utils.js";
 
 const createFooterStatisticsHTML = (films) =>
   `<p>${films.length} movies inside</p>`;
