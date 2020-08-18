@@ -1,22 +1,22 @@
 import { createElement } from "../utils.js";
 
-const createFooterStatisticsHTML = (films) =>
-  `<p>${films.length} movies inside</p>`;
+const createFooterStatisticsHTML = (amount) =>
+  `<p>${amount >= 0 ? amount : 0} movies inside</p>`;
 
 
 export default class FilmCard {
-  constructor(films) {
+  constructor(amount) {
     this._element = null;
-    this.film = films;
+    this.amount = amount;
   }
 
-  getTemplate(films) {
-    return createFooterStatisticsHTML(films);
+  getTemplate(amount) {
+    return createFooterStatisticsHTML(amount);
   }
 
   getElement() {
     if (!this._element) {
-      this._element = createElement(this.getTemplate(this.film));
+      this._element = createElement(this.getTemplate(this.amount));
     }
 
     return this._element;

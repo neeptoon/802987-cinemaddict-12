@@ -1,4 +1,4 @@
-import { createElement } from "../utils.js";
+import {createElement} from "../utils.js";
 
 const createGenreFieldHTML = (genres) => {
   return `<span class="film-details__genre">${genres}</span>`;

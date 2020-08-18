@@ -1,10 +1,10 @@
-import { createElement } from "../utils.js";
-import { cardFilmClickHandler } from "../main.js";
+import {createElement} from "../utils.js";
+import {cardFilmClickHandler} from "../main.js";
 
 const createFilmCardHTML = (film) => {
   const MAX_STRING_LENGTH = 140;
 
-  const { name, image, description, rating, publishYear, genre, duration, comments } = film;
+  const {name, image, description, rating, publishYear, genre, duration, comments} = film;
   const truncation = (str, maxlength) => {
     return (str.length > maxlength) ? str.slice(0, maxlength - 1) + `…` : str;
   };

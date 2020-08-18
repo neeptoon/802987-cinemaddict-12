@@ -1,5 +1,5 @@
-import { getRandomInteger, getRandomFraction, shuffleArray, uniteSeveralThingsIntoArray, getSomeValue } from "../utils.js";
-import { FILMS_COUNT, MAX_COMMENT, MIN_COMMENT } from "../constants.js";
+import {getRandomInteger, getRandomFraction, shuffleArray, uniteSeveralThingsIntoArray, getSomeValue} from "../utils.js";
+import {FILMS_COUNT, MAX_COMMENT, MIN_COMMENT} from "../constants.js";
 
 
 const names = [`Волки`, `Овцы`, `Снег`, `Такси`, `Билет`, `Трамвай`, `Зеленый слоник`, `Вишневый загар`, `Быстрый самолет`, `Уголек`, `Паста из баклажанов`, `Красный пожар`, `Коммунистический рассвет`, `Стрелец`, `Коровий Бунт`, `Ночной поезд`];
