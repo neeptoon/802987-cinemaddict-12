@@ -71,16 +71,28 @@ filmsListExtra.forEach((elem) => {
 // render Cards
 const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
 
-export const cardFilmClickHandler = (data, index) => (evt) => {
-  const [...renderedFilmCard] = document.querySelectorAll(`.film-card`);
-  const [...title] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__title`));
-  const [...poster] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__poster`));
-  const [...comments] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__comments`));
-  if (evt.target === title[index] || evt.target === poster[index] || evt.target === comments[index]) {
+export const cardFilmClickHandler = (data, index, location) => (evt) => {
+  const targets = getTargetsToClick(location);
+  if (evt.target === targets.title[index] || evt.target === targets.poster[index] || evt.target === targets.comments[index]) {
     closePopup();
     openPopup(data);
   }
 };
+
+const getTargetsToClick = (location) => {
+  const [...renderedFilmCard] = location.querySelectorAll(`.film-card`);
+  const [...title] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__title`));
+  const [...poster] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__poster`));
+  const [...comments] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__comments`));
+
+  return {
+    renderedFilmCard,
+    title,
+    poster,
+    comments,
+  };
+};
+
 
 let amountRenderedFilmCards = 0;
 
@@ -89,7 +101,7 @@ const renderMainFilmCards = (cards) => {
     let filmCard = new FilmCard(cards[i]);
     if (cards[i]) {
       render(mainFilmsListContainer, filmCard.getElement(), RenderPosition.BEFOREEND);
-      filmCard.addHandler(i);
+      filmCard.addHandler(i, mainFilmsListContainer);
     } else if (showMoreFilmCardsButton) {
       showMoreFilmCardsButton.remove();
     }
@@ -103,7 +115,11 @@ const renderFollowingFilmCards = (cards) => {
     .slice()
     .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
     .filter((elem, index) => index < AMOUNT_COMMENT_FILM_CARDS)
-    .forEach((elem) => render(commentedFilmsListContainer, new FilmCard(elem).getElement(), RenderPosition.BEFOREEND));
+    .forEach((elem, index) => {
+      let filmCard = new FilmCard(cards[index]);
+      render(commentedFilmsListContainer, filmCard.getElement(), RenderPosition.BEFOREEND);
+      filmCard.addHandler(index);
+    });
   cards
     .slice()
     .sort((a, b) => a.rating > b.rating ? -1 : 1)
