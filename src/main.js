@@ -13,7 +13,7 @@ import Comment from "./view/comment.js";
 import GenreField from "./view/genre-field.js";
 import { generateFilter } from "./view/filter.js";
 import { mockFilmsList } from "./mock/mockFilms.js";
-import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_RATED_FILM_CARDS, AMOUNT_COMMENT_FILM_CARDS, FILMS_COUNT } from "./constants.js";
+import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT } from "./constants.js";
 import { render, RenderPosition } from "./utils.js";
 
 
@@ -110,21 +110,31 @@ const renderMainFilmCards = (cards) => {
   render(footerStatistics, new FooterStatistics(mockFilmsList.length - amountRenderedFilmCards).getElement(), RenderPosition.BEFOREEND);
 };
 
+const sort = {
+  byComments: (a, b) => a.comments.length > b.comments.length ? -1 : 1,
+  byRated: (a, b) => a.rating > b.rating ? -1 : 1,
+};
+
 const renderFollowingFilmCards = (cards) => {
-  cards
-    .slice()
+  const commentedCards = cards.slice();
+  commentedCards
     .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
-    .filter((elem, index) => index < AMOUNT_COMMENT_FILM_CARDS)
+    .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
     .forEach((elem, index) => {
-      let filmCard = new FilmCard(cards[index]);
+      let filmCard = new FilmCard(commentedCards[index]);
       render(commentedFilmsListContainer, filmCard.getElement(), RenderPosition.BEFOREEND);
-      filmCard.addHandler(index);
+      filmCard.addHandler(index, commentedFilmsListContainer);
     });
-  cards
-    .slice()
+
+  const ratedCards = cards.slice();
+  ratedCards
     .sort((a, b) => a.rating > b.rating ? -1 : 1)
-    .filter((elem, index) => index < AMOUNT_RATED_FILM_CARDS)
-    .forEach((elem) => render(ratedFilmsListContainer, new FilmCard(elem).getElement(), RenderPosition.BEFOREEND));
+    .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
+    .forEach((elem, index) => {
+      let filmCard = new FilmCard(ratedCards[index]);
+      render(ratedFilmsListContainer, filmCard.getElement(), RenderPosition.BEFOREEND);
+      filmCard.addHandler(index, ratedFilmsListContainer);
+    });
 };
 
 renderMainFilmCards(mockFilmsList);
