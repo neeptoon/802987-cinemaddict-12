@@ -11,10 +11,10 @@ import FooterStatistics from "./view/foooter-statistics.js";
 import FilmDetails from "./view/film-details.js";
 import Comment from "./view/comment.js";
 import GenreField from "./view/genre-field.js";
-import { generateFilter } from "./view/filter.js";
-import { mockFilmsList } from "./mock/mockFilms.js";
-import { AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT } from "./constants.js";
-import { render, RenderPosition } from "./utils.js";
+import {generateFilter} from "./view/filter.js";
+import {mockFilmsList} from "./mock/mockFilms.js";
+import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "./constants.js";
+import {render, RenderPosition} from "./utils.js";
 
 
 const header = document.querySelector(`.header`);
@@ -108,11 +108,6 @@ const renderMainFilmCards = (cards) => {
   }
   amountRenderedFilmCards += AMOUNT_FILM_CARDS_BY_STEP;
   render(footerStatistics, new FooterStatistics(mockFilmsList.length - amountRenderedFilmCards).getElement(), RenderPosition.BEFOREEND);
-};
-
-const sort = {
-  byComments: (a, b) => a.comments.length > b.comments.length ? -1 : 1,
-  byRated: (a, b) => a.rating > b.rating ? -1 : 1,
 };
 
 const renderFollowingFilmCards = (cards) => {
