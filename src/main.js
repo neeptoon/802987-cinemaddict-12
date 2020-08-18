@@ -23,6 +23,7 @@ const footer = document.querySelector(`.footer`);
 const footerStatistics = footer.querySelector(`.footer__statistics`);
 const preparatedMainFilmCardsForRender = mockFilmsList.slice();
 const filters = generateFilter(preparatedMainFilmCardsForRender);
+const clearFooterStatistics = () => footerStatistics.firstElementChild.remove();
 
 render(header, new Profile().getElement(), RenderPosition.BEFOREEND);
 render(main, new MainNavigation(filters).getElement(), RenderPosition.AFTERBEGIN);
@@ -46,7 +47,7 @@ if (AMOUNT_FILM_CARDS_BY_STEP < FILMS_COUNT) {
   showMoreFilmCardsButton = filmsList.querySelector(`.films-list__show-more`);
 
   const buttonClickHandler = () => {
-    footerStatistics.firstElementChild.remove();
+    clearFooterStatistics();
     renderMainFilmCards(mockFilmsList.slice(0, amountRenderedFilmCards + AMOUNT_FILM_CARDS_BY_STEP));
     if (mockFilmsList.length <= amountRenderedFilmCards) {
       showMoreFilmCardsButton.remove();
@@ -71,12 +72,15 @@ filmsListExtra.forEach((elem) => {
 const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
 
 export const cardFilmClickHandler = (data, index) => (evt) => {
+  const [...renderedFilmCard] = document.querySelectorAll(`.film-card`);
+  const [...title] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__title`));
+  const [...poster] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__poster`));
+  const [...comments] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__comments`));
   if (evt.target === title[index] || evt.target === poster[index] || evt.target === comments[index]) {
     closePopup();
     openPopup(data);
   }
 };
-
 
 let amountRenderedFilmCards = 0;
 
@@ -112,10 +116,7 @@ renderFollowingFilmCards(mockFilmsList);
 //
 
 // show popup
-const [...renderedFilmCard] = document.querySelectorAll(`.film-card`);
-const [...title] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__title`));
-const [...poster] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__poster`));
-const [...comments] = renderedFilmCard.map((elem) => elem.querySelector(`.film-card__comments`));
+
 let popup = null;
 
 const fillPopupWithData = (card) => {
