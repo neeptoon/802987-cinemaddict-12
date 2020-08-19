@@ -1,4 +1,7 @@
-export const createFilmCardHTML = (film) => {
+import {createElement} from "../utils.js";
+import {cardFilmClickHandler} from "../main.js";
+
+const createFilmCardHTML = (film) => {
   const MAX_STRING_LENGTH = 140;
 
   const {name, image, description, rating, publishYear, genre, duration, comments} = film;
@@ -24,4 +27,31 @@ export const createFilmCardHTML = (film) => {
           </form>
         </article>`;
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._element = null;
+    this.film = film;
+  }
+
+  getTemplate(film) {
+    return createFilmCardHTML(film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate(this.film));
+    }
+
+    return this._element;
+  }
+
+  addHandler(index, location) {
+    this._element.addEventListener(`click`, cardFilmClickHandler(this.film, index, location));
+  }
+
+  removeElement() {
+    this._element = 0;
+  }
+}
 

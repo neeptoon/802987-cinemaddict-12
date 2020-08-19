@@ -1,8 +1,3 @@
-export const AMOUNT_FILMS_LIST_EXTRA = 2;
-export const AMOUNT_MAIN_FILM_CARDS = 5;
-export const AMOUNT_RATED_FILM_CARDS = 2;
-export const AMOUNT_COMMENT_FILM_CARDS = 2;
-
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -39,3 +34,30 @@ export const uniteSeveralThingsIntoArray = (thing, amountThing) => {
 };
 
 export const getSomeValue = (arr) => arr[getRandomInteger(0, arr.length - 1)];
+
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+export const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
+export const renderTemplate = (elem, where, html) => {
+  elem.insertAdjacentHTML(where, html);
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};

@@ -1,8 +1,6 @@
 import {getRandomInteger, getRandomFraction, shuffleArray, uniteSeveralThingsIntoArray, getSomeValue} from "../utils.js";
+import {FILMS_COUNT, MAX_COMMENT, MIN_COMMENT} from "../constants.js";
 
-const FILMS_COUNT = 15;
-const MAX_COMMENT = 5;
-const MIN_COMMENT = 0;
 
 const names = [`Волки`, `Овцы`, `Снег`, `Такси`, `Билет`, `Трамвай`, `Зеленый слоник`, `Вишневый загар`, `Быстрый самолет`, `Уголек`, `Паста из баклажанов`, `Красный пожар`, `Коммунистический рассвет`, `Стрелец`, `Коровий Бунт`, `Ночной поезд`];
 const images = [`made-for-each-other.png`, `popeye-meets-sinbad.png`, `sagebrush-trail.jpg`, `santa-claus-conquers-the-martians.jpg`, `the-dance-of-life.jpg`, `the-great-flamarion.jpg`, `the-man-with-the-golden-arm.jpg`];
@@ -103,6 +101,9 @@ const generateFilm = () => {
     writers: getSomeValue(writers),
     actors: getSomeValue(actors),
     country: getSomeValue(countries),
+    isWatchlist: Boolean(getRandomInteger(0, 1)),
+    isHistory: Boolean(getRandomInteger(0, 1)),
+    isFavorites: Boolean(getRandomInteger(0, 1)),
   };
 };
 
