@@ -1,17 +1,15 @@
 import {createElement} from "../utils.js";
 
-const createFilmsListHTML = () =>
-  `<section class="films-list">
-      
-    </section >`;
+const createNoDataHeadingHTML = () =>
+  `<h2 class="films-list__title">There are no movies in our database</h2>`;
 
-export default class FilmsList {
+export default class NoDataHeading {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createFilmsListHTML();
+    return createNoDataHeadingHTML();
   }
 
   getElement() {
