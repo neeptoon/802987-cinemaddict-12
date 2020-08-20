@@ -11,6 +11,8 @@ import FooterStatistics from "./view/foooter-statistics.js";
 import FilmDetails from "./view/film-details.js";
 import Comment from "./view/comment.js";
 import GenreField from "./view/genre-field.js";
+import NoDataHeading from "./view/no-data-heading.js";
+import DataReceivedHeading from "./view/data-received-heading.js";
 import {generateFilter} from "./view/filter.js";
 import {mockFilmsList} from "./mock/mockFilms.js";
 import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "./constants.js";
@@ -38,6 +40,24 @@ const filmsList = films.querySelector(`.films-list`);
 
 render(filmsList, new FilmsListContainer().getElement(), RenderPosition.BEFOREEND);
 
+if (mockFilmsList && mockFilmsList.length > 0) {
+  render(filmsList, new DataReceivedHeading().getElement(), RenderPosition.AFTERBEGIN);
+
+  for (let i = 0; i < AMOUNT_FILMS_LIST_EXTRA; i++) {
+    render(films, new FilmsListExtra(i).getElement(), RenderPosition.BEFOREEND);
+  }
+
+  const [...filmsListExtra] = films.querySelectorAll(`.films-list--extra`);
+
+  filmsListExtra.forEach((elem) => {
+    render(elem, new FilmsListContainer().getElement(), RenderPosition.BEFOREEND);
+  });
+
+} else {
+  render(filmsList, new NoDataHeading().getElement(), RenderPosition.AFTERBEGIN);
+}
+
+
 // render showMoreFilmsButton
 let showMoreFilmCardsButton = null;
 
@@ -58,15 +78,6 @@ if (AMOUNT_FILM_CARDS_BY_STEP < FILMS_COUNT) {
 }
 //
 
-for (let i = 0; i < AMOUNT_FILMS_LIST_EXTRA; i++) {
-  render(films, new FilmsListExtra(i).getElement(), RenderPosition.BEFOREEND);
-}
-
-const [...filmsListExtra] = films.querySelectorAll(`.films-list--extra`);
-
-filmsListExtra.forEach((elem) => {
-  render(elem, new FilmsListContainer().getElement(), RenderPosition.BEFOREEND);
-});
 
 // render Cards
 const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = films.querySelectorAll(`.films-list__container`);
