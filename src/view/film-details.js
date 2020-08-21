@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract";
 
 const createFilmDetailsHTML = (film) => {
   const {name, image, description, rating, publishYear, duration, comments, genre, director, writers, actors, country} = film;
@@ -117,25 +117,15 @@ const createFilmDetailsHTML = (film) => {
 };
 
 
-export default class FilmDetails {
+export default class FilmDetails extends AbstractClass {
   constructor(film) {
-    this._element = null;
-    this.film = film;
+    super();
+    this._film = film;
   }
 
-  getTemplate(film) {
-    return createFilmDetailsHTML(film);
+  getTemplate() {
+    return createFilmDetailsHTML(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.film));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
-  }
 }
+

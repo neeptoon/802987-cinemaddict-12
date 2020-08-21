@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract.js";
 
 const createSortHTML = () =>
   `<ul class="sort">
@@ -7,24 +7,10 @@ const createSortHTML = () =>
     <li><a href="#" class="sort__button">Sort by rating</a></li>
   </ul>`;
 
-export default class Sort {
-  constructor() {
-    this._element = null;
-  }
+export default class Sort extends AbstractClass {
 
   getTemplate() {
     return createSortHTML();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
-  }
 }

@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract";
 
 const createMainNavigationHTML = (filter) => {
   const [, watchlist, history, favorites] = filter;
@@ -14,27 +14,17 @@ const createMainNavigationHTML = (filter) => {
   </nav>`;
 };
 
-export default class MainNavigation {
+export default class MainNavigation extends AbstractClass {
   constructor(filter) {
+    super();
     this._element = null;
-    this.filter = filter;
+    this._filter = filter;
   }
 
-  getTemplate(filter) {
-    return createMainNavigationHTML(filter);
+  getTemplate() {
+    return createMainNavigationHTML(this._filter);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.filter));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
-  }
 }
 
 

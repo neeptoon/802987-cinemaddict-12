@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractClass from './abstract.js';
 
 const createFilmsListExtraHTML = (index) => {
   const filmsListExtraHeaders = [`Top rated`, `Most commented`];
@@ -7,25 +7,14 @@ const createFilmsListExtraHTML = (index) => {
     </section >`;
 };
 
-export default class FilmsListExtra {
+export default class FilmsListExtra extends AbstractClass {
   constructor(index) {
+    super();
     this._element = null;
-    this.index = index;
+    this._index = index;
   }
 
-  getTemplate(index) {
-    return createFilmsListExtraHTML(index);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.index));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
+  getTemplate() {
+    return createFilmsListExtraHTML(this._index);
   }
 }
