@@ -59,22 +59,18 @@ if (mockFilmsList && mockFilmsList.length > 0) {
 
 
 // render showMoreFilmsButton
-let showMoreFilmCardsButton = null;
+let showMoreFilmCardsButton = new ShowMoreButton();
 
 if (AMOUNT_FILM_CARDS_BY_STEP < FILMS_COUNT) {
-  render(filmsList, new ShowMoreButton().getElement(), RenderPosition.BEFOREEND);
+  render(filmsList, showMoreFilmCardsButton.getElement(), RenderPosition.BEFOREEND);
 
-  showMoreFilmCardsButton = filmsList.querySelector(`.films-list__show-more`);
-
-  const buttonClickHandler = () => {
+  showMoreFilmCardsButton.setClickHandler(() => {
     clearFooterStatistics();
     renderMainFilmCards(mockFilmsList.slice(0, amountRenderedFilmCards + AMOUNT_FILM_CARDS_BY_STEP));
     if (mockFilmsList.length <= amountRenderedFilmCards) {
-      showMoreFilmCardsButton.remove();
+      showMoreFilmCardsButton.removeElement();
     }
-  };
-
-  showMoreFilmCardsButton.addEventListener(`click`, buttonClickHandler);
+  });
 }
 //
 
@@ -114,7 +110,7 @@ const renderMainFilmCards = (cards) => {
       render(mainFilmsListContainer, filmCard.getElement(), RenderPosition.BEFOREEND);
       filmCard.addHandler(i, mainFilmsListContainer);
     } else if (showMoreFilmCardsButton) {
-      showMoreFilmCardsButton.remove();
+      showMoreFilmCardsButton.removeElement();
     }
   }
   amountRenderedFilmCards += AMOUNT_FILM_CARDS_BY_STEP;
