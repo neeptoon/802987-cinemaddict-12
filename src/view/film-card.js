@@ -38,7 +38,7 @@ export default class FilmCard extends AbstractClass {
     return createFilmCardHTML(this._film);
   }
 
-  addHandler(index, location) {
+  addClickHandler(index, location) {
     this._element.addEventListener(`click`, cardFilmClickHandler(this._film, index, location));
   }
 }
