@@ -1,8 +1,6 @@
 import Profile from "./view/profile.js";
 import MainNavigation from "./view/main-navigation.js";
 import Sort from "./view/sort.js";
-import Films from "./view/films.js";
-import FilmsList from "./view/films-list.js";
 import ShowMoreButton from "./view/button.js";
 import FilmsListExtra from "./view/films-list-extra.js";
 import FilmsListContainer from "./view/films-list-container.js";
@@ -17,6 +15,7 @@ import {generateFilter} from "./view/filter.js";
 import {mockFilmsList} from "./mock/mockFilms.js";
 import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "./constants.js";
 import {render, RenderPosition} from "./utils/render.js";
+import MovieList from "./presenter/movieList.js";
 
 
 const header = document.querySelector(`.header`);
@@ -30,15 +29,13 @@ const clearFooterStatistics = () => footerStatistics.firstElementChild.remove();
 render(header, new Profile(), RenderPosition.BEFOREEND);
 render(main, new MainNavigation(filters), RenderPosition.AFTERBEGIN);
 render(main, new Sort(), RenderPosition.BEFOREEND);
-render(main, new Films(), RenderPosition.BEFOREEND);
+
+const filmPresenter = new MovieList(main);
+filmPresenter.init(mockFilmsList);
 
 const films = main.querySelector(`.films`);
 
-render(films, new FilmsList(), RenderPosition.AFTERBEGIN);
-
 const filmsList = films.querySelector(`.films-list`);
-
-render(filmsList, new FilmsListContainer(), RenderPosition.BEFOREEND);
 
 if (mockFilmsList && mockFilmsList.length > 0) {
   render(filmsList, new DataReceivedHeading(), RenderPosition.AFTERBEGIN);
