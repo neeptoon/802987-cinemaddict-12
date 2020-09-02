@@ -19,7 +19,7 @@ import MovieList from "./presenter/movieList.js";
 
 
 const header = document.querySelector(`.header`);
-const main = document.querySelector(`.main`);
+export const main = document.querySelector(`.main`);
 const footer = document.querySelector(`.footer`);
 const footerStatistics = footer.querySelector(`.footer__statistics`);
 const preparatedMainFilmCardsForRender = mockFilmsList.slice();
@@ -32,27 +32,6 @@ render(main, new Sort(), RenderPosition.BEFOREEND);
 
 const filmPresenter = new MovieList(main);
 filmPresenter.init(mockFilmsList);
-
-const films = main.querySelector(`.films`);
-
-const filmsList = films.querySelector(`.films-list`);
-
-if (mockFilmsList && mockFilmsList.length > 0) {
-  render(filmsList, new DataReceivedHeading(), RenderPosition.AFTERBEGIN);
-
-  for (let i = 0; i < AMOUNT_FILMS_LIST_EXTRA; i++) {
-    render(films, new FilmsListExtra(i), RenderPosition.BEFOREEND);
-  }
-
-  const [...filmsListExtra] = films.querySelectorAll(`.films-list--extra`);
-
-  filmsListExtra.forEach((elem) => {
-    render(elem, new FilmsListContainer(), RenderPosition.BEFOREEND);
-  });
-
-} else {
-  render(filmsList, new NoDataHeading(), RenderPosition.AFTERBEGIN);
-}
 
 
 // render showMoreFilmsButton
@@ -141,7 +120,6 @@ renderFollowingFilmCards(mockFilmsList);
 //
 
 // show popup
-
 let popup = null;
 
 const fillPopupWithData = (card) => {
@@ -180,7 +158,6 @@ const closePopup = function () {
   document.removeEventListener(`keydown`, documentKeyDownHandler);
   document.removeEventListener(`click`, documentClickHandler);
 };
-
 //
 
 
