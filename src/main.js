@@ -1,19 +1,14 @@
 import Profile from "./view/profile.js";
 import MainNavigation from "./view/main-navigation.js";
 import Sort from "./view/sort.js";
-import ShowMoreButton from "./view/button.js";
-import FilmsListExtra from "./view/films-list-extra.js";
-import FilmsListContainer from "./view/films-list-container.js";
 import FilmCard from "./view/film-card.js";
 import FooterStatistics from "./view/foooter-statistics.js";
 import FilmDetails from "./view/film-details.js";
 import Comment from "./view/comment.js";
 import GenreField from "./view/genre-field.js";
-import NoDataHeading from "./view/no-data-heading.js";
-import DataReceivedHeading from "./view/data-received-heading.js";
 import {generateFilter} from "./view/filter.js";
 import {mockFilmsList} from "./mock/mockFilms.js";
-import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "./constants.js";
+import {AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "./constants.js";
 import {render, RenderPosition} from "./utils/render.js";
 import MovieList from "./presenter/movieList.js";
 
@@ -24,7 +19,7 @@ const footer = document.querySelector(`.footer`);
 const footerStatistics = footer.querySelector(`.footer__statistics`);
 const preparatedMainFilmCardsForRender = mockFilmsList.slice();
 const filters = generateFilter(preparatedMainFilmCardsForRender);
-const clearFooterStatistics = () => footerStatistics.firstElementChild.remove();
+export const clearFooterStatistics = () => footerStatistics.firstElementChild.remove();
 
 render(header, new Profile(), RenderPosition.BEFOREEND);
 render(main, new MainNavigation(filters), RenderPosition.AFTERBEGIN);
@@ -32,23 +27,6 @@ render(main, new Sort(), RenderPosition.BEFOREEND);
 
 const filmPresenter = new MovieList(main);
 filmPresenter.init(mockFilmsList);
-
-
-// render showMoreFilmsButton
-let showMoreFilmCardsButton = new ShowMoreButton();
-
-if (AMOUNT_FILM_CARDS_BY_STEP < FILMS_COUNT) {
-  render(filmsList, showMoreFilmCardsButton, RenderPosition.BEFOREEND);
-
-  showMoreFilmCardsButton.setClickHandler(() => {
-    clearFooterStatistics();
-    renderMainFilmCards(mockFilmsList.slice(0, amountRenderedFilmCards + AMOUNT_FILM_CARDS_BY_STEP));
-    if (mockFilmsList.length <= amountRenderedFilmCards) {
-      showMoreFilmCardsButton.removeElement();
-    }
-  });
-}
-//
 
 
 // render Cards

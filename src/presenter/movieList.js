@@ -8,7 +8,8 @@ import DataReceivedHeading from "../view/data-received-heading.js";
 import {render, RenderPosition} from "../utils/render.js";
 import {mockFilmsList} from "../mock/mockFilms.js";
 import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "../constants.js";
-import {main} from "../main.js";
+import {main, clearFooterStatistics, renderMainFilmCards} from "../main.js";
+
 export default class MovieList {
   constructor(container) {
     this._container = container;
@@ -51,6 +52,22 @@ export default class MovieList {
 
     } else {
       render(filmsList, new NoDataHeading(), RenderPosition.AFTERBEGIN);
+    }
+
+    this._renderShowMoreFilmsButton();
+  }
+
+  _renderShowMoreButton() {
+    if (AMOUNT_FILM_CARDS_BY_STEP < FILMS_COUNT) {
+      render(this._filmsList, this._showMoreButton, RenderPosition.BEFOREEND);
+
+      this._showMoreButton.setClickHandler(() => {
+        clearFooterStatistics();
+        renderMainFilmCards(mockFilmsList.slice(0, this._amountRenderedFilmCards + AMOUNT_FILM_CARDS_BY_STEP));
+        if (mockFilmsList.length <= this._amountRenderedFilmCards) {
+          this._showMoreButton.removeElement();
+        }
+      });
     }
   }
 }
