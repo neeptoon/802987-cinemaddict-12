@@ -94,29 +94,6 @@ export default class MovieList {
   }
 
   _renderMainFilmsCard(cards) {
-
-    // export const cardFilmClickHandler = (data, index, location) => (evt) => {
-    //   const targets = getTargetsToClick(location);
-    //   if (evt.target === targets.title[index] || evt.target === targets.poster[index] || evt.target === targets.comments[index]) {
-    //     closePopup();
-    //     openPopup(data);
-    //   }
-    // };
-
-    // const getTargetsToClick = (location) => {
-    //   const [...renderedFilmCards] = location.querySelectorAll(`.film-card`);
-    //   const [...titles] = renderedFilmCards.map((elem) => elem.querySelector(`.film-card__title`));
-    //   const [...posters] = renderedFilmCards.map((elem) => elem.querySelector(`.film-card__poster`));
-    //   const [...comments] = renderedFilmCards.map((elem) => elem.querySelector(`.film-card__comments`));
-
-    //   return {
-    //     renderedFilmCard: renderedFilmCards,
-    //     title: titles,
-    //     poster: posters,
-    //     comments,
-    //   };
-    //
-
     for (let i = this._amountRenderedFilmCards; i < AMOUNT_FILM_CARDS_BY_STEP + this._amountRenderedFilmCards; i++) {
       let filmCard = new FilmCard(cards[i]);
       if (cards[i]) {
@@ -132,7 +109,6 @@ export default class MovieList {
   }
 
   _renderFollowingFilmCards(cards) {
-
     const commentedCards = cards.slice();
     commentedCards
         .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
@@ -152,7 +128,5 @@ export default class MovieList {
           render(this._getContainersForRendeerFilmCard().RATED_CONTAINER, filmCard, RenderPosition.BEFOREEND);
           filmCard.addClickHandler(index, this._getContainersForRendeerFilmCard().RATED_CONTAINER);
         });
-
   }
-
 }
