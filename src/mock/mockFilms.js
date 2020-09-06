@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomFraction, shuffleArray, uniteSeveralThingsIntoArray, getSomeValue} from "../utils.js";
+import {getRandomInteger, getRandomFraction, shuffleArray, uniteSeveralThingsIntoArray, getSomeValue} from "../utils/common.js";
 import {FILMS_COUNT, MAX_COMMENT, MIN_COMMENT} from "../constants.js";
 
 

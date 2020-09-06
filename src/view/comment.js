@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract.js";
 
 const createCommentHTML = (elem) => {
   const {text, author, time, emoji} = elem;
@@ -15,26 +15,14 @@ const createCommentHTML = (elem) => {
 </li>`;
 };
 
-export default class Comment {
+export default class Comment extends AbstractClass {
   constructor(elem) {
-    this._element = null;
-    this.elem = elem;
+    super();
+    this._elem = elem;
   }
 
-  getTemplate(elem) {
-    return createCommentHTML(elem);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.elem));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
+  getTemplate() {
+    return createCommentHTML(this._elem);
   }
 }
 

@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract.js";
 
 const createProfileHTML = () =>
   `<section class="header__profile profile">
@@ -6,25 +6,10 @@ const createProfileHTML = () =>
     <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
   </section>`;
 
-export default class Profile {
-  constructor() {
-    this._element = null;
-  }
+export default class Profile extends AbstractClass {
 
   getTemplate() {
     return createProfileHTML();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-
-  removeElement() {
-    this._element = 0;
-  }
 }

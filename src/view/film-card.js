@@ -1,5 +1,5 @@
-import {createElement} from "../utils.js";
-import {cardFilmClickHandler} from "../main.js";
+import {cardFilmClickHandler} from "../utils/cardFilmClickHandler.js";
+import AbstractClass from "./abstract.js";
 
 const createFilmCardHTML = (film) => {
   const MAX_STRING_LENGTH = 140;
@@ -28,30 +28,18 @@ const createFilmCardHTML = (film) => {
         </article>`;
 };
 
-export default class FilmCard {
+export default class FilmCard extends AbstractClass {
   constructor(film) {
-    this._element = null;
-    this.film = film;
+    super();
+    this._film = film;
   }
 
-  getTemplate(film) {
-    return createFilmCardHTML(film);
+  getTemplate() {
+    return createFilmCardHTML(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.film));
-    }
-
-    return this._element;
-  }
-
-  addHandler(index, location) {
-    this._element.addEventListener(`click`, cardFilmClickHandler(this.film, index, location));
-  }
-
-  removeElement() {
-    this._element = 0;
+  addClickHandler(index, location) {
+    this._element.addEventListener(`click`, cardFilmClickHandler(this._film, index, location));
   }
 }
 

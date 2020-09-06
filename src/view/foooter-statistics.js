@@ -1,28 +1,19 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract";
+
 
 const createFooterStatisticsHTML = (amount) =>
   `<p>${amount >= 0 ? amount : 0} movies inside</p>`;
 
 
-export default class FilmCard {
+export default class FilmCard extends AbstractClass {
   constructor(amount) {
+    super();
     this._element = null;
-    this.amount = amount;
+    this._amount = amount;
   }
 
-  getTemplate(amount) {
-    return createFooterStatisticsHTML(amount);
+  getTemplate() {
+    return createFooterStatisticsHTML(this._amount);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.amount));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
-  }
 }

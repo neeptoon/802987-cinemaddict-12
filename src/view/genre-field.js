@@ -1,29 +1,19 @@
-import {createElement} from "../utils.js";
+import AbstractClass from "./abstract";
 
 const createGenreFieldHTML = (genres) => {
   return `<span class="film-details__genre">${genres}</span>`;
 };
 
 
-export default class GenreField {
+export default class GenreField extends AbstractClass {
   constructor(card) {
+    super();
     this._element = null;
-    this.card = card;
+    this._card = card;
   }
 
-  getTemplate(card) {
-    return createGenreFieldHTML(card);
+  getTemplate() {
+    return createGenreFieldHTML(this._card);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate(this.card));
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = 0;
-  }
 }
