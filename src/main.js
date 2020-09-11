@@ -1,6 +1,6 @@
 import Profile from "./view/profile.js";
 import MainNavigation from "./view/main-navigation.js";
-import Sort from "./view/sort.js";
+
 import {generateFilter} from "./view/filter.js";
 import {mockFilmsList} from "./mock/mockFilms.js";
 import {render, RenderPosition} from "./utils/render.js";
@@ -17,7 +17,6 @@ export const clearFooterStatistics = () => footerStatistics.firstElementChild.re
 
 render(header, new Profile(), RenderPosition.BEFOREEND);
 render(main, new MainNavigation(filters), RenderPosition.AFTERBEGIN);
-render(main, new Sort(), RenderPosition.BEFOREEND);
 
 const filmPresenter = new MovieList(main);
 filmPresenter.init(mockFilmsList);
