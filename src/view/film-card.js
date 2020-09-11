@@ -38,8 +38,8 @@ export default class FilmCard extends AbstractClass {
     return createFilmCardHTML(this._film);
   }
 
-  addClickHandler(index, location) {
-    this._element.addEventListener(`click`, cardFilmClickHandler(this._film, index, location));
+  addClickHandler() {
+    this._element.addEventListener(`click`, cardFilmClickHandler(this._film));
   }
 }
 

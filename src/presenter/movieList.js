@@ -8,12 +8,12 @@ import NoDataHeading from "../view/no-data-heading.js";
 import DataReceivedHeading from "../view/data-received-heading.js";
 import {render, RenderPosition} from "../utils/render.js";
 import {mockFilmsList} from "../mock/mockFilms.js";
-import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT} from "../constants.js";
+import {AMOUNT_FILMS_LIST_EXTRA, AMOUNT_FILM_CARDS_BY_STEP, AMOUNT_FOLOWING_FILM_CARDS, FILMS_COUNT, SortType} from "../constants.js";
 import {main, clearFooterStatistics, footerStatistics} from "../main.js";
 import FilmCard from "../view/film-card.js";
 import FooterStatistics from "../view/foooter-statistics.js";
-import {SortType} from "../constants.js";
 import {sortDate, sortRating} from "../utils/sort.js";
+import MovieCard from "./movieCard.js";
 
 export default class MovieList {
   constructor(container) {
@@ -38,7 +38,6 @@ export default class MovieList {
     render(this._films, this._filmsList, RenderPosition.AFTERBEGIN);
     render(this._filmsList, this._filmsContainer, RenderPosition.BEFOREEND);
     this._renderDataRecievedHeading();
-    // this._renderShowMoreButton();
     this._renderExtraFilmsContainer();
     this._renderMainFilmsCard(this._movies);
     this._renderFollowingFilmCards(this._movies);
@@ -50,7 +49,6 @@ export default class MovieList {
   }
 
   _sortFilmCard(sortType) {
-
     switch (sortType) {
       case SortType.DATE:
         this._movies.sort(sortDate);
@@ -98,7 +96,7 @@ export default class MovieList {
     });
   }
 
-  _getContainersForRendeerFilmCard() {
+  _getContainersForRenderFilmCard() {
     const [mainFilmsListContainer, ratedFilmsListContainer, commentedFilmsListContainer] = main.querySelectorAll(`.films-list__container`);
     return {
       MAIN_CONTAINER: mainFilmsListContainer,
@@ -122,39 +120,47 @@ export default class MovieList {
   }
 
   _renderMainFilmsCard(cards) {
+    const container = this._getContainersForRenderFilmCard().MAIN_CONTAINER;
+    const movieCard = new MovieCard(container);
+
     for (let i = this._amountRenderedFilmCards; i < AMOUNT_FILM_CARDS_BY_STEP + this._amountRenderedFilmCards; i++) {
-      let filmCard = new FilmCard(cards[i]);
+      // let filmCard = new FilmCard(cards[i]);
       if (cards[i]) {
-        render(this._getContainersForRendeerFilmCard().MAIN_CONTAINER, filmCard, RenderPosition.BEFOREEND);
-        filmCard.addClickHandler(i, this._getContainersForRendeerFilmCard().MAIN_CONTAINER);
-        this._renderShowMoreButton();
+        movieCard.init(cards[i]);
+        // render(container, filmCard, RenderPosition.BEFOREEND);
+        // filmCard.addClickHandler();
       } else if (this._showMoreButton) {
         this._showMoreButton.removeElement();
       }
     }
+
     this._amountRenderedFilmCards += AMOUNT_FILM_CARDS_BY_STEP;
+    this._renderShowMoreButton();
     render(footerStatistics, new FooterStatistics(mockFilmsList.length - this._amountRenderedFilmCards), RenderPosition.BEFOREEND);
   }
 
   _renderFollowingFilmCards(cards) {
+    const commentedContainer = this._getContainersForRenderFilmCard().COMMENTED_CONTAINER;
+    const ratedContainer = this._getContainersForRenderFilmCard().RATED_CONTAINER;
     const commentedCards = cards.slice();
+    const ratedCards = cards.slice();
+
     commentedCards
         .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
         .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
         .forEach((elem, index) => {
           let filmCard = new FilmCard(commentedCards[index]);
-          render(this._getContainersForRendeerFilmCard().COMMENTED_CONTAINER, filmCard, RenderPosition.BEFOREEND);
-          filmCard.addClickHandler(index, this._getContainersForRendeerFilmCard().COMMENTED_CONTAINER);
+          render(commentedContainer, filmCard, RenderPosition.BEFOREEND);
+          filmCard.addClickHandler();
         });
 
-    const ratedCards = cards.slice();
     ratedCards
         .sort((a, b) => a.rating > b.rating ? -1 : 1)
         .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
         .forEach((elem, index) => {
           let filmCard = new FilmCard(ratedCards[index]);
-          render(this._getContainersForRendeerFilmCard().RATED_CONTAINER, filmCard, RenderPosition.BEFOREEND);
-          filmCard.addClickHandler(index, this._getContainersForRendeerFilmCard().RATED_CONTAINER);
+          render(ratedContainer, filmCard, RenderPosition.BEFOREEND);
+          filmCard.addClickHandler();
         });
   }
 }

@@ -1,9 +1,7 @@
-import {getTargetsToClick} from "./getTargetsToClick.js";
 import {closePopup, openPopup} from "../view/popup.js";
 
-export const cardFilmClickHandler = (data, index, location) => (evt) => {
-  const targets = getTargetsToClick(location);
-  if (evt.target === targets.title[index] || evt.target === targets.poster[index] || evt.target === targets.comments[index]) {
+export const cardFilmClickHandler = (data) => (evt) => {
+  if (evt.target.tagName === `IMG` || evt.target.tagName === `H3` || evt.target.tagName === `A`) {
     closePopup();
     openPopup(data);
   }
