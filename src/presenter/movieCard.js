@@ -3,8 +3,6 @@ import {render, RenderPosition} from "../utils/render.js";
 import GenreField from "../view/genre-field.js";
 import FilmDetails from "../view/film-details.js";
 import FilmCard from "../view/film-card.js";
-import {cardFilmClickHandler} from "../utils/cardFilmClickHandler.js";
-
 
 export default class MovieCard {
   constructor(movieContainer) {
@@ -12,6 +10,8 @@ export default class MovieCard {
     this._movieContainer = movieContainer;
     this._movieComponent = null;
     this._popup = null;
+    this._documentClickHandler = this._documentClickHandler.bind(this);
+    this._documentKeyDownHandler = this._documentKeyDownHandler.bind(this);
   }
 
   init(movie) {
@@ -24,12 +24,11 @@ export default class MovieCard {
 
   _addClickHandler() {
     const element = this._movieComponent.getElement();
-    element.addEventListener(`click`, cardFilmClickHandler(this._movie));
+    element.addEventListener(`click`, this._cardFilmClickHandler(this._movie));
   }
 
   _renderCard() {
     render(this._movieContainer, this._movieComponent, RenderPosition.BEFOREEND);
-    this._movieComponent.addClickHandler();
   }
 
   _fillPopupWithData(card) {

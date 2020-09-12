@@ -124,11 +124,8 @@ export default class MovieList {
     const movieCard = new MovieCard(container);
 
     for (let i = this._amountRenderedFilmCards; i < AMOUNT_FILM_CARDS_BY_STEP + this._amountRenderedFilmCards; i++) {
-      // let filmCard = new FilmCard(cards[i]);
       if (cards[i]) {
         movieCard.init(cards[i]);
-        // render(container, filmCard, RenderPosition.BEFOREEND);
-        // filmCard.addClickHandler();
       } else if (this._showMoreButton) {
         this._showMoreButton.removeElement();
       }
