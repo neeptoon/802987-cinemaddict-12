@@ -1,4 +1,3 @@
-import {cardFilmClickHandler} from "../utils/cardFilmClickHandler.js";
 import AbstractClass from "./abstract.js";
 
 const createFilmCardHTML = (film) => {
@@ -36,10 +35,6 @@ export default class FilmCard extends AbstractClass {
 
   getTemplate() {
     return createFilmCardHTML(this._film);
-  }
-
-  addClickHandler() {
-    this._element.addEventListener(`click`, cardFilmClickHandler(this._film));
   }
 }
 
