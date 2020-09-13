@@ -34,10 +34,18 @@ export default class MovieCard {
 
   _fillPopupWithData(card) {
     this._popup = main.querySelector(`.film-details`);
-    card.comments.forEach((elem) => render(this._popup.querySelector(`.film-details__comments-list`), new Comment(elem), RenderPosition.BEFOREEND));
+
+    card.comments.forEach((elem) => {
+      const comments = new Comment(elem);
+      render(this._popup.querySelector(`.film-details__comments-list`), comments, RenderPosition.BEFOREEND);
+    });
+
     const [...rowsForProperties] = this._popup.querySelectorAll(`.film-details__row`);
     const rowForGenres = rowsForProperties[rowsForProperties.length - 1];
-    card.genre.genres.forEach((elem) => render(rowForGenres.querySelector(`.film-details__cell`), new GenreField(elem).getElement(), RenderPosition.BEFOREEND));
+    card.genre.genres.forEach((elem) => {
+      const genreField = new GenreField(elem);
+      render(rowForGenres.querySelector(`.film-details__cell`), genreField, RenderPosition.BEFOREEND);
+    });
   }
 
   _documentKeyDownHandler(evt) {
@@ -48,7 +56,7 @@ export default class MovieCard {
   }
 
   _openPopup(card) {
-    render(main, new FilmDetails(card).getElement(), RenderPosition.BEFOREEND);
+    render(main, new FilmDetails(card), RenderPosition.BEFOREEND);
     this._fillPopupWithData(card);
     document.addEventListener(`keydown`, this._documentKeyDownHandler);
     document.addEventListener(`click`, this._documentClickHandler);
