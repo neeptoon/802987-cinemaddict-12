@@ -3,6 +3,7 @@ import {render, RenderPosition} from "../utils/render.js";
 import GenreField from "../view/genre-field.js";
 import FilmDetails from "../view/film-details.js";
 import FilmCard from "../view/film-card.js";
+import Comment from "../view/comment.js";
 
 export default class MovieCard {
   constructor(movieContainer) {
