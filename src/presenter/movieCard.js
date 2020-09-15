@@ -13,6 +13,7 @@ export default class MovieCard {
     this._popup = null;
     this._documentClickHandler = this._documentClickHandler.bind(this);
     this._documentKeyDownHandler = this._documentKeyDownHandler.bind(this);
+    this._cardFilmClickHandler = this._cardFilmClickHandler.bind(this);
   }
 
   init(movie) {
@@ -33,14 +34,13 @@ export default class MovieCard {
   }
 
   _fillPopupWithData(card) {
-    this._popup = main.querySelector(`.film-details`);
-
     card.comments.forEach((elem) => {
       const comments = new Comment(elem);
-      render(this._popup.querySelector(`.film-details__comments-list`), comments, RenderPosition.BEFOREEND);
+      const container = this._popup.getElement().querySelector(`.film-details__comments-list`);
+      render(container, comments, RenderPosition.BEFOREEND);
     });
 
-    const [...rowsForProperties] = this._popup.querySelectorAll(`.film-details__row`);
+    const [...rowsForProperties] = this._popup.getElement().querySelectorAll(`.film-details__row`);
     const rowForGenres = rowsForProperties[rowsForProperties.length - 1];
     card.genre.genres.forEach((elem) => {
       const genreField = new GenreField(elem);
@@ -56,14 +56,15 @@ export default class MovieCard {
   }
 
   _openPopup(card) {
-    render(main, new FilmDetails(card), RenderPosition.BEFOREEND);
+    this._popup = new FilmDetails(card);
+    render(main, this._popup, RenderPosition.BEFOREEND);
     this._fillPopupWithData(card);
     document.addEventListener(`keydown`, this._documentKeyDownHandler);
     document.addEventListener(`click`, this._documentClickHandler);
   }
 
   _documentClickHandler(evt) {
-    const closePopupButton = this._popup.querySelector(`.film-details__close-btn`);
+    const closePopupButton = this._popup.getElement().querySelector(`.film-details__close-btn`);
     if (evt.target === closePopupButton) {
       this._closePopup();
     }
@@ -71,7 +72,7 @@ export default class MovieCard {
 
   _closePopup() {
     if (this._popup) {
-      this._popup.remove();
+      this._popup.removeElement();
     }
     document.removeEventListener(`keydown`, this._documentKeyDownHandler);
     document.removeEventListener(`click`, this._documentClickHandler);
