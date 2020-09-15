@@ -27,19 +27,16 @@ export default class MovieList {
     this._amountRenderedFilmCards = 0;
     this._currentSortType = SortType.DEFAULT;
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+    this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
   }
 
   init(movies) {
-    this._renderSort();
     this._movies = movies.slice();
     this._sourcedMovies = movies.slice();
     render(this._container, this._films, RenderPosition.BEFOREEND);
-    render(this._films, this._filmsList, RenderPosition.AFTERBEGIN);
-    render(this._filmsList, this._filmsContainer, RenderPosition.BEFOREEND);
+    this._renderMainFilmsContainer();
     this._renderDataRecievedHeading();
     this._renderExtraFilmsContainer();
-    this._renderMainFilmsCard(this._movies);
-    this._renderFollowingFilmCards(this._movies);
   }
 
   _clearFilmsList() {
@@ -68,19 +65,19 @@ export default class MovieList {
     }
     this._clearFilmsList();
     this._sortFilmCard(sortType);
-    this._renderMainFilmsCard(this._movies);
+    this._renderCardsList();
     clearFooterStatistics();
-    this._renderFollowingFilmCards(this._movies);
   }
 
   _renderSort() {
-    render(this._container, this._sort, RenderPosition.BEFOREEND);
+    render(this._filmsList, this._sort, RenderPosition.AFTERBEGIN);
     this._sort.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderDataRecievedHeading() {
     if (mockFilmsList && mockFilmsList.length > 0) {
       render(this._filmsList, this._dataReceivedHeading, RenderPosition.AFTERBEGIN);
+      this._renderSort();
       for (let i = 0; i < AMOUNT_FILMS_LIST_EXTRA; i++) {
         render(this._films, new FilmsListExtra(i), RenderPosition.BEFOREEND);
       }
@@ -94,6 +91,7 @@ export default class MovieList {
     filmsListExtra.forEach((elem) => {
       render(elem, new FilmsListContainer(), RenderPosition.BEFOREEND);
     });
+    this._renderFollowingFilmCards(this._movies);
   }
 
   _getContainersForRenderFilmCard() {
@@ -108,31 +106,44 @@ export default class MovieList {
   _renderShowMoreButton() {
     if (AMOUNT_FILM_CARDS_BY_STEP < FILMS_COUNT && this._movies.length) {
       render(this._filmsList, this._showMoreButton, RenderPosition.BEFOREEND);
-
-      this._showMoreButton.setClickHandler(() => {
-        clearFooterStatistics();
-        this._renderMainFilmsCard(this._movies.slice(0, this._amountRenderedFilmCards + AMOUNT_FILM_CARDS_BY_STEP));
-        if (this._movies.length <= this._amountRenderedFilmCards) {
-          this._showMoreButton.removeElement();
-        }
-      });
     }
+    this._showMoreButton.setClickHandler(this._handleShowMoreButtonClick);
   }
 
-  _renderMainFilmsCard(cards) {
+  _handleShowMoreButtonClick() {
+    clearFooterStatistics();
+    this._renderCards(this._amountRenderedFilmCards, this._amountRenderedFilmCards + AMOUNT_FILM_CARDS_BY_STEP);
+    this._amountRenderedFilmCards += AMOUNT_FILM_CARDS_BY_STEP;
+    if (this._amountRenderedFilmCards >= this._movies.length) {
+      this._showMoreButton.removeElement();
+    }
+    render(render(footerStatistics, new FooterStatistics(mockFilmsList.length - this._amountRenderedFilmCards), RenderPosition.BEFOREEND));
+  }
+
+  _renderMainFilmsContainer() {
+    render(this._films, this._filmsList, RenderPosition.AFTERBEGIN);
+    render(this._filmsList, this._filmsContainer, RenderPosition.BEFOREEND);
+    this._renderCardsList();
+  }
+
+  _renderCard(card) {
     const container = this._getContainersForRenderFilmCard().MAIN_CONTAINER;
     const movieCard = new MovieCard(container);
+    movieCard.init(card);
+  }
 
-    for (let i = this._amountRenderedFilmCards; i < AMOUNT_FILM_CARDS_BY_STEP + this._amountRenderedFilmCards; i++) {
-      if (cards[i]) {
-        movieCard.init(cards[i]);
-      } else if (this._showMoreButton) {
-        this._showMoreButton.removeElement();
-      }
+  _renderCards(from, to) {
+    this._movies
+      .slice(from, to)
+      .forEach((filmCard) => this._renderCard(filmCard));
+  }
+
+  _renderCardsList() {
+    this._renderCards(0, Math.min(this._movies.length, AMOUNT_FILM_CARDS_BY_STEP));
+    if (this._movies.length > AMOUNT_FILM_CARDS_BY_STEP) {
+      this._renderShowMoreButton();
     }
-
     this._amountRenderedFilmCards += AMOUNT_FILM_CARDS_BY_STEP;
-    this._renderShowMoreButton();
     render(footerStatistics, new FooterStatistics(mockFilmsList.length - this._amountRenderedFilmCards), RenderPosition.BEFOREEND);
   }
 
