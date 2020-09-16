@@ -147,25 +147,29 @@ export default class MovieList {
     render(footerStatistics, new FooterStatistics(mockFilmsList.length - this._amountRenderedFilmCards), RenderPosition.BEFOREEND);
   }
 
+  _renderExtraCardsList() {
+    this._renderCards(0, AMOUNT_FOLOWING_FILM_CARDS);
+  }
+
   _renderFollowingFilmCards(cards) {
     const commentedContainer = this._getContainersForRenderFilmCard().COMMENTED_CONTAINER;
     const ratedContainer = this._getContainersForRenderFilmCard().RATED_CONTAINER;
     const commentedCards = cards.slice();
     const ratedCards = cards.slice();
-    const movieCardCommented = new MovieCard(commentedContainer);
-    const movieCardRated = new MovieCard(ratedContainer);
 
     commentedCards
-        .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
-        .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
-        .forEach((elem, index) => {
-          movieCardCommented.init(commentedCards[index]);
-        });
+    .sort((a, b) => a.comments.length > b.comments.length ? -1 : 1)
+    .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
+    .forEach((elem, index) => {
+      const movieCardCommented = new MovieCard(commentedContainer);
+      movieCardCommented.init(commentedCards[index]);
+    });
 
     ratedCards
         .sort((a, b) => a.rating > b.rating ? -1 : 1)
         .filter((elem, index) => index < AMOUNT_FOLOWING_FILM_CARDS)
         .forEach((elem, index) => {
+          const movieCardRated = new MovieCard(ratedContainer);
           movieCardRated.init(ratedCards[index]);
         });
   }

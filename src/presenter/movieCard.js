@@ -19,18 +19,26 @@ export default class MovieCard {
   init(movie) {
     this._movie = movie;
 
+    const prevMovieComponent = this._movieComponent;
+
     this._movieComponent = new FilmCard(this._movie);
-    this._renderCard();
-    this._addClickHandler();
+
+    if (prevMovieComponent === null) {
+      render(this._movieContainer, this._movieComponent, RenderPosition.BEFOREEND);
+      this._addClickHandler();
+      return;
+    }
+
+    if (this._movieComponent.getElement().contains(prevMovieComponent.getElement())) {
+      this._movieComponent.replaceWith(prevMovieComponent);
+    }
+
+    prevMovieComponent.removeElement();
   }
 
   _addClickHandler() {
     const element = this._movieComponent.getElement();
     element.addEventListener(`click`, this._cardFilmClickHandler(this._movie));
-  }
-
-  _renderCard() {
-    render(this._movieContainer, this._movieComponent, RenderPosition.BEFOREEND);
   }
 
   _fillPopupWithData(card) {
